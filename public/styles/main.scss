@@ -1,0 +1,33 @@
+@import './bootstrap.scss';
+@import url('https://fonts.googleapis.com/css?family=Dosis:300,500');
+@import './components/*';
+@import './_util.scss';
+@import './overrides.scss';
+@import './_typography.scss';
+
+.navbar-brand {
+    font-family: 'Dosis';
+    font-size: 2.6em;
+    font-weight: 800;
+    &:hover {
+        color: $brand-primary;
+    }
+}
+
+.font-alt {
+    font-family: 'Dosis';
+}
+
+
+
+.content-title {
+    @extend .text-brand;
+    font-weight: 800;
+    display: block; 
+    background-color: $brand-primary;
+    color: white;
+    font-size: 1.5em;
+    border-radius: 5px;
+    padding: 0 10px 3px 10px;
+    margin: 0 0 15px 0;
+}

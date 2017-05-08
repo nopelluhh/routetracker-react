@@ -1,0 +1,14 @@
+.table-center > td, .table-center >th {
+    text-align: center;
+}
+
+.table-mobile > thead > tr > th, 
+.table-mobile > thead > tr > td, 
+.table-mobile > tbody > tr > th, 
+.table-mobile > tbody > tr > td, 
+.table-mobile > tfoot > tr > th, 
+.table-mobile > tfoot > tr > td {
+    @media (max-width: $screen-sm) {
+        padding:  6px 2px 6px;
+    }
+}

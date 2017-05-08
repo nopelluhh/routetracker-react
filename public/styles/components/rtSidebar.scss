@@ -1,0 +1,26 @@
+.rt-sidebar {
+    z-index: 1000;
+    position: fixed;
+    width: 150px;
+    left: -160px;
+    border-radius: 0 15px 15px 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease-in;
+    ul {
+        padding: 0px 5px;
+        margin: 0
+    }
+    .sidebar-link {
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.3em;
+        color: white;
+        &:hover {
+            color: $brand-primary
+        }
+    }
+    @media (min-width: 500px) {
+        left: 0px;
+    }
+}
+

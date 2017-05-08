@@ -1,0 +1,15 @@
+.list__swatch {
+    width: 50%;
+    min-width: 80px;
+    display: inline-block;
+    text-align: center;
+    @media (min-width: 400px) {
+        padding: 3px;
+        margin: 0 10px
+    }
+}
+
+
+.gym-row__date {
+    width: 200px;
+}

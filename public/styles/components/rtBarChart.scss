@@ -1,0 +1,28 @@
+.rt-bar {
+    &:hover {
+        opacity: 0.9
+    }
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: $border-radius-base
+}
+
+.rt-marker {
+    font-family: 'Dosis';
+    pointer-events: none;
+    user-select: none; 
+    fill: white;
+}
+
+.chart {
+    width: 100%;
+    max-height: 40vh;
+    background-color: $gray-dark;
+    border-radius: $border-radius-large
+}
