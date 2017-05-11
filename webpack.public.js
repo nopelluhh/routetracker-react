@@ -28,11 +28,18 @@ module.exports = {
         path: path.resolve(__dirname, 'build'),
         publicPath: `http://${host}:${devPort}/assets/`
     },
-    devtool: 'inline-source-map',
     plugins: [
         chunkPlugin,
         extractSass,
+        new webpack.DefinePlugin({ // <-- key to reducing React's size
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin(), //minify everything
+        new webpack.optimize.AggressiveMergingPlugin()//Merge chunks 
     ],
+    
     resolve: {
         modules: [
             path.resolve(__dirname, 'public'),
