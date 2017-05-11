@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import RtSwatch from 'components/common/rtSwatch'
 import { connect } from 'react-redux'
 import { postRoute } from 'data/actions/route'
-import { Button } from 'react-bootstrap'
+import { Button, ButtonToolbar } from 'react-bootstrap'
 
 
 class WzPreview extends Component {
@@ -36,7 +36,10 @@ class WzPreview extends Component {
 
                   </ul>
                   ) : null}
-                  <Button bsStyle="primary" block onClick={this.postRoute}>Add Route</Button>
+                  <div className="text-center">
+                    <Button bsStyle="info" onClick={this.edit}>Edit</Button>
+                    <Button bsStyle="primary" onClick={this.postRoute}>Add Route</Button>
+                  </div>
                 </div>
             )
         }
@@ -45,20 +48,33 @@ class WzPreview extends Component {
 
     postRoute = () => {
         this.props.postRoute(this.transformedRoute)
+            .then(() => {
+                this.props.reset()
+                this.setState({
+                    added: true
+                })
+            })
+    }
+
+    edit = () => {
+        this.props.move(-1)
     }
 }
 
 WzPreview.propTypes = {
     route: PropTypes.object,
-    grades: PropTypes.array
+    grades: PropTypes.object,
+    reset: PropTypes.func,
+    move: PropTypes.func,
+    postRoute: PropTypes.func
 }
 
 function transformRoute(obj) {
-    if (obj.gym && obj.grade && obj.color && obj.tags.length && obj.location)
+    if (obj.gym && obj.grade && obj.color && obj.tags && obj.location)
         return {
             type: obj.type,
             color: obj.color.value,
-            grade: obj.grade.value.slice(1),
+            grade: obj.grade._id,
             gym: obj.gym._id,
             wall: obj.location,
             tags: obj.tags.join(', ')

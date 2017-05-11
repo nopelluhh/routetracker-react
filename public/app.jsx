@@ -22,6 +22,15 @@ const store = createStore(
     applyMiddleware(routeMiddleware, thunk.withExtraArgument(fetcher))
     )
 
+if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./data/reducers', () => {
+        const nextRootReducer = require('./data/reducers/index')
+        store.replaceReducer(nextRootReducer)
+    })
+}
+
+
 
 class App extends Component {
     render() {

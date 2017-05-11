@@ -16,14 +16,10 @@ class GymItem extends Component {
 
     componentDidMount() {
         this.props.getRoutes(this.props.gym._id)
-        .then(routes => {
-            this.setState({
-                data: transformRoutes(routes)
-            })
-        })
     }
 
     render() {
+        console.log('rendered', this.props.data)
         return (
             <div className="gym-item">
               <div className="gym-title text-brand text-uppercase text-thin">
@@ -32,8 +28,8 @@ class GymItem extends Component {
                 </Link>
               </div>
               <div className="gym-preview">
-                { this.state.data
-                  ? <RtBar data={ this.state.data } width={ 200 } height={ 200 } />
+                { this.props.data
+                  ? <RtBar data={ this.props.data } width={ 200 } height={ 200 } />
                   : null }
               </div>
             </div>
@@ -46,8 +42,10 @@ GymItem.propTypes = {
 }
 
 function mapState(state, ownProps) {
+    let gymRoutes = state.routes.toArray().filter(route => route.gym === ownProps.gym._id)
+
     return {
-        routes: state.routes.toArray().filter(route => route.gym === ownProps.gym._id)
+        data: transformRoutes(gymRoutes)
     }
 }
 
@@ -60,6 +58,7 @@ function mapDispatch(dispatch) {
 export default connect(mapState, mapDispatch)(GymItem)
 
 function transformRoutes(routes) {
+    if(!routes.length) return null
     let sorted = π.buckets(routes.map(boulder => boulder.grade), π.range(13))
     return Object.keys(sorted).map(key => sorted[key])
 }

@@ -1,9 +1,8 @@
 import {receiveGyms} from './gym'
-export const RECEIVE_TEAM = 'RECEIVE_TEAM'
 
 export function receiveTeam(team) {
     return {
-        type: RECEIVE_TEAM,
+        type: 'RECEIVE_TEAM',
         team
     }
 }

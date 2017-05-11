@@ -7,7 +7,7 @@ class LoadContainer extends React.Component {
         const content = React.Children.toArray(this.props.children)
 
         return (
-            <ReactCSSTransitionReplace transitionName="load_container" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+            <ReactCSSTransitionReplace transitionName="load_container" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
               { this.props.loaded ? content[1] : content[0] }
             </ReactCSSTransitionReplace>
         )

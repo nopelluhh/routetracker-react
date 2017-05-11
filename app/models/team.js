@@ -7,7 +7,8 @@ const team = new Schema({
         ref: 'user'
     }],
     grades: {
-        type: [String]
+        boulder: [String],
+        rope: [String]
     },
     gyms: [{
         type: Schema.Types.ObjectId,

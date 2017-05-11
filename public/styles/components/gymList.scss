@@ -19,7 +19,7 @@
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
     min-width: 100%;
-    @media (min-width: 500px) {
+    @media (min-width: 500p x) {
         min-width: 45%
     }
     @media (min-width: $screen-sm - 1) {
@@ -38,3 +38,4 @@
 .gym-preview {
     min-height: 210px;
 }
+

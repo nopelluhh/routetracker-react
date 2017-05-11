@@ -1,0 +1,16 @@
+.load_container-enter {
+  opacity: 0;
+}
+.load_container-enter.load_container-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s ease-in  0.2s;
+}
+
+.load_container-leave {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.load_container-leave.load_container-leave-active {
+  opacity: 0;
+}

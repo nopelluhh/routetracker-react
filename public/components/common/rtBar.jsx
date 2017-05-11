@@ -58,14 +58,17 @@ function makeChart() {
         .attr('opacity', (d) => + d
             ? 1
             : 0.4)
-        .attr('y', (d) => {
-            return height - y(d) - 3
-        })
+        .attr('y', height)
         .attr('fill', function (d, i) {
             return rainbow(i)
         })
         .transition()
-        .duration(500)
+        .delay(() => 400 - Math.random()*100)
+        .duration(300)
+        .ease(d3.easeExpIn)
+        .attr('y', (d) => {
+            return height - y(d) - 3
+        })
         .attr('height', (d) => y(d) + 3)
 
 }

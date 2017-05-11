@@ -1,8 +1,6 @@
-export const UPDATE_ROUTE = 'UPDATE_ROUTE'
-
 export function updateRoute(field, value) {
     return {
-        type: UPDATE_ROUTE,
+        type: 'UPDATE_NEW_ROUTE',
         field,
         value
     }

@@ -16,7 +16,6 @@ const WzStep = (props) => {
       <div className="text-center h3 text-capitalize">
         { props.name }:</div>
       <WzPage next={props.next} prev={props.prev}/>
-      { /*<wz-page prev="$ctrl.moveContainer(-1)" next="$ctrl.moveContainer(1)"></wz-page>*/ }
       { props.children }
     </div>
     )

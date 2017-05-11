@@ -43,18 +43,22 @@
 }
 
 .wz-dot {
+    background-color: white;
+    border-radius: $border-radius-base;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: auto;
+    margin-bottom: 5%;
     position: relative;
     width: 30%;
-    height: auto;
-    border-radius: $border-radius-base;
-    margin-bottom: 5%;
+    @media(min-width: $screen-sm) {
+        width: 22%;
+        margin-bottom: 3%;
+    }
     &:after {
         content: "";
         display: block;
         padding-top: 100%;
     }
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
 }
 
 .wz-label {

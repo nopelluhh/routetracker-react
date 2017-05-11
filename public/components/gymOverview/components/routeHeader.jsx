@@ -26,7 +26,8 @@ const RouteHeader = (props) => {
 }
 
 RouteHeader.propTypes = {
-    handleSort: PropTypes.func
+    handleSort: PropTypes.func.isRequired,
+    sort: PropTypes.string
 }
 
 export default RouteHeader

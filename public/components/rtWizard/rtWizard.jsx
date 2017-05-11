@@ -17,9 +17,6 @@ class RtWizard extends Component {
         this.clicks = 0
         this.clicked = 'gym'
         this.steps = ['gym', 'color', 'grade', 'location', 'tags']
-        this.move = this.move.bind(this)
-        this.update = this.update.bind(this)
-        this.updateTags = this.updateTags.bind(this)
     }
 
     render() {
@@ -53,7 +50,7 @@ class RtWizard extends Component {
         this.setState({step: toStep})
     }
 
-    move(dir, field) {
+    move = (dir, field) => {
         let current = this.state.step
         // called by update
         if(field) return this.setState({step: current + dir})
@@ -62,7 +59,7 @@ class RtWizard extends Component {
         this.setState({step: current + dir})
     }
 
-    update(field, value) {
+    update = (field, value) => {
         // handle double click
         if (this.clicks > 0 && this.props.route[field] === value) return this.move(1, field)
 
@@ -83,7 +80,7 @@ class RtWizard extends Component {
         setTimeout(() => this.clicks--, 500)
     }
 
-    updateTags(tags, tag) {
+    updateTags = (tags, tag) => {
         let {value} = tag
         
         // handle double click
@@ -109,8 +106,8 @@ class RtWizard extends Component {
         this.setState({gymFilter: filter})
     }
 
-    resetForm() {
-        this.props.reset()
+    resetForm = () => {
+        this.props.resetForm()
         this.setState({step: 1})
     }
 
@@ -139,7 +136,7 @@ class RtWizard extends Component {
             }, {
                 name: 'grade',
                 content: (
-                    <WzGrid items={this.props.team.grades} route={this.props.route} selector={'grade'} update={this.update}/>
+                    <WzGrid items={this.props.route.type? this.props.team.grades[this.props.route.type] : this.props.team.grades.boulder} route={this.props.route} selector={'grade'} update={this.update}/>
                 )
             }, {
                 name: 'location',
@@ -156,7 +153,7 @@ class RtWizard extends Component {
                 end: true,
                 review: true,
                 content: (
-                    <WzPreview route={this.props.route}/>
+                    <WzPreview route={this.props.route} move={this.move} reset={this.resetForm}/>
                 )
             }
         ]
@@ -167,7 +164,8 @@ RtWizard.propTypes = {
     route: PropTypes.object,
     gyms: PropTypes.array,
     update: PropTypes.func,
-    team: PropTypes.object
+    team: PropTypes.object,
+    resetForm: PropTypes.func
 }
 
 export default RtWizard

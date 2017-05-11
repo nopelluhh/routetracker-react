@@ -20,7 +20,7 @@ class fetcher {
     }
 
     update(resource, data) {
-        return fetcher(this.prefix + resource, {
+        return fetch(this.prefix + resource, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -28,6 +28,7 @@ class fetcher {
             },
             body: formatBody(data)
         })
+        .then(res => res.json())
     }
 }
 

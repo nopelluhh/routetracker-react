@@ -10,8 +10,11 @@ const Route = new Schema({
         enum: ['boulder', 'rope'],
         required: true
     },
+    set_on: {
+        type: Date
+    },
     grade: {
-        type: String,
+        type: Number,
         required: true
     },
     color: {
@@ -26,6 +29,7 @@ const Route = new Schema({
         type: String,
         required: true
     },
+    tags: [String],
     setter: {
         type: String
         // type: Schema.Types.ObjectId,
@@ -33,7 +37,8 @@ const Route = new Schema({
     }
 }, {
     timestamps: {
-        createdAt: 'created_at'
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 })
 

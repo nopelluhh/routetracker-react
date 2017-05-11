@@ -22,26 +22,25 @@ class RouteList extends Component {
         <RouteHeader handleSort={ this.handleSort } sort={this.state.sort} dir={this.state.dir}/>
         <tbody>
           { this.state.routes.map(route => (
-              <RouteRow key={ route._id } route={ route } updateRoute={this.updateRoute} />
+              <RouteRow key={ route._id + route.updated_at } route={ route } updateRoute={this.updateRoute} />
             )) }
         </tbody>
       </table>
         )
     }
 
-    handleSort(param) {
-        let that = this
-        return function() {
-            let newRoutes = [...that.state.routes], dir
-            if(that.state.sort === param) {
+    handleSort = (param) => {
+        return () => {
+            let newRoutes = [...this.state.routes], dir
+            if(this.state.sort === param) {
                 newRoutes.reverse()
-                dir = that.state.dir === 'asc' ? 'desc' : 'asc'
+                dir = this.state.dir === 'asc' ? 'desc' : 'asc'
             } else {
                 sortOn(newRoutes, param)
                 dir = 'asc'
             }
             
-            that.setState({
+            this.setState({
                 dir,
                 sort: param,
                 routes: newRoutes
@@ -49,13 +48,19 @@ class RouteList extends Component {
         }
     }
 
-    updateRoute = (route) => {
-        this.props.postUpdate(route)
+    updateRoute = (newRoute) => {
+        this.setState({
+            routes: this.state.routes.map(route => {
+                return route._id === newRoute._id? newRoute : route
+            })
+        })
+        this.props.updateRoute(newRoute)
     }
 }
 
 RouteList.propTypes = {
-    routes: PropTypes.array
+    routes: PropTypes.array,
+    updateRoute: PropTypes.func
 }
 
 function sortOn (arr, prop) {

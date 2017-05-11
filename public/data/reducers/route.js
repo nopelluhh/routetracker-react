@@ -7,7 +7,7 @@ function route(state = initialState, action) {
         return state.set(action.route._id, action.route)
     case 'RECEIVE_ROUTES':
         return state.concat(action.routes.map(route => [route._id,route]))
-    case 'UPDATE_ROUTE': 
+    case 'UPDATE_ROUTE':
         return state.set(action.route._id, action.route)
     default:
         return state

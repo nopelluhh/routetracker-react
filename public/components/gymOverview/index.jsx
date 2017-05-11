@@ -11,13 +11,21 @@ import StatsCard from './components/statsCard'
 import RouteList from './components/routeList'
 
 import { getTeam } from 'data/actions/team'
-import { getRoutesByGym } from 'data/actions/route'
+import { getRoutesByGym, putRoute } from 'data/actions/route'
 
 import π from 'util.js'
 
 class GymOverview extends Component {
     state = {
         loaded: false
+    }
+
+    static propTypes =  {
+        name: PropTypes.string,
+        gym: PropTypes.object,
+        getRoutes: PropTypes.func,
+        getTeam: PropTypes.func,
+        match: PropTypes.object
     }
 
     componentDidMount() {
@@ -40,15 +48,15 @@ class GymOverview extends Component {
                 <span className="content-title bs-1">{ this.props.gym && this.props.gym.name }</span>
                 <div className="row">
                   <div className="col-xs-12 col-sm-8">
-                    <RtBigBar data={ this.state.count } width="500" height="200"></RtBigBar>
+                    <RtBigBar data={ this.props.count } width="500" height="200"></RtBigBar>
                   </div>
                   <div className="col-sm-4 col-xs-12 col-np">
-                    <StatsCard data={ this.state.data } />
+                    <StatsCard data={ this.props.data } />
                   </div>
                 </div>
                 <div className="row">
                     <div className="col-xs-12">
-                        <RouteList routes={this.state.data}/>
+                        <RouteList routes={this.props.data} updateRoute={this.props.updateRoute}/>
                     </div>
                 </div>
               </section>
@@ -69,34 +77,38 @@ class GymOverview extends Component {
                 }
 
             })
-            .then(data => {
-                if (!data) return
+            .then(() => {
                 this.setState({
-                    data: data,
-                    count: transformRoutes(data),
                     loaded: true
+                })
+            })
+            .catch(() => {
+                this.setState({
+                    error: true
                 })
             })
     }
 }
 
-GymOverview.propTypes = {
-    name: PropTypes.string,
-    gym: PropTypes.object,
-    getRoutes: PropTypes.func,
-    getTeam: PropTypes.func
-}
+
 
 function mapState(state, ownProps) {
+    let gym = state.gyms.filter(gym => gym.url === ownProps.match.params.name)[0]
+    let routes = state.routes.filter(route => route.gym === gym._id)
+    let hash = routes.hashCode()
+    let arr = routes.toArray()
     return {
-        gym: state.gyms.filter(gym => gym.url === ownProps.match.params.name)[0]
+        gym: gym,
+        data: arr,
+        count: transformRoutes(arr)
     }
 }
 
 function mapDispatch(dispatch) {
     return {
         getTeam: () => dispatch(getTeam()),
-        getRoutes: (id) => dispatch(getRoutesByGym(id))
+        getRoutes: (id) => dispatch(getRoutesByGym(id)),
+        updateRoute: (route) => dispatch(putRoute(route))
     }
 }
 

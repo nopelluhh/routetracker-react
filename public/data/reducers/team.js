@@ -1,13 +1,19 @@
 const initialState = {
     colors: [],
     tags: [],
-    grades: []
+    grades: {
+        boulder: [],
+        rope: []
+    }
 }
 
 const transformTeam = (team) => {
     return {
         ...team,
-        grades: team.grades.map(grade => {return {_id: grade, value: grade}}),
+        grades: {
+            boulder: team.grades.boulder.map((grade, index) => {return {_id: index, value: grade}}),
+            rope: team.grades.rope.map((grade, index) => {return {_id: index, value: grade}})
+        },
         colors: team.colors.map(color => {return {_id: color.name, value: color.name, color: color.color}}),
         tags: team.tags.map(tag => {return {_id: tag, value: tag}})
     }

@@ -25,7 +25,7 @@ export function getRoutesByGym(id) {
             gym: id
         }).then(routes => {
             dispatch(receiveRoutes(routes))
-            return routes
+            //return routes
         })
     }
 }
@@ -35,6 +35,7 @@ export function postRoute(route) {
         return fetcher.create('route', route)
             .then(res => {
                 dispatch(addRoute(res))
+                return res
             })
     }
 }
@@ -44,6 +45,7 @@ export function putRoute(route) {
         return fetcher.update(`route/${route._id}`, route)
             .then(res => {
                 dispatch(updateRoute(res))
+                return res
             })
     }
 }
