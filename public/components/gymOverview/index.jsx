@@ -25,7 +25,8 @@ class GymOverview extends Component {
         gym: PropTypes.object,
         getRoutes: PropTypes.func,
         getTeam: PropTypes.func,
-        match: PropTypes.object
+        match: PropTypes.object,
+        team: PropTypes.object
     }
 
     componentDidMount() {
@@ -56,7 +57,7 @@ class GymOverview extends Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-12">
-                        <RouteList routes={this.props.data} updateRoute={this.props.updateRoute}/>
+                        <RouteList routes={this.props.data} updateRoute={this.props.updateRoute} team={this.props.team}/>
                     </div>
                 </div>
               </section>
@@ -100,7 +101,8 @@ function mapState(state, ownProps) {
     return {
         gym: gym,
         data: arr,
-        count: transformRoutes(arr)
+        count: transformRoutes(arr),
+        team: state.team
     }
 }
 

@@ -1,12 +1,18 @@
 import React from 'react'
 
-const styles = {
-    display: 'flex',
-    justifyContent: 'spaceBetween'
+const styles = (props) => {
+    return {
+        display: props.inline? 'inline-flex' : 'flex',
+        justifyContent: 'space-between',
+        margin: 'auto',
+        ...props.style
+    }
 }
 
 const flexRow = (props) => (
-    <div style={styles}>{props.children}</div>
+    <div style={ styles(props) }>
+      { props.children }
+    </div>
 )
 
 export default flexRow

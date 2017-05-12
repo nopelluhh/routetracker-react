@@ -1,21 +1,21 @@
 export function addRoute(route) {
     return {
         type: 'ADD_ROUTE',
-        route
+        payload: route
     }
 }
 
 export function receiveRoutes(routes) {
     return {
         type: 'RECEIVE_ROUTES',
-        routes
+        payload: routes
     }
 }
 
 export function updateRoute(route) {
     return {
         type: 'UPDATE_ROUTE',
-        route
+        payload: route
     }
 }
 

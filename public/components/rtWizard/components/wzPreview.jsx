@@ -77,7 +77,8 @@ function transformRoute(obj) {
             grade: obj.grade._id,
             gym: obj.gym._id,
             wall: obj.location,
-            tags: obj.tags.join(', ')
+            tags: obj.tags.join(', '),
+            set_on: Date.now()
         }
     return false
 }

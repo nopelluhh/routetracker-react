@@ -15,6 +15,7 @@ const User = new Schema({
         type: String,
         enum: ['setter', 'head', 'admin']
     }],
+    nickname: String,
     local: {
         fname: {
             type: String,

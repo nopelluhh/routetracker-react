@@ -10,7 +10,7 @@ const transformGyms = (gyms) => {
 const gym = (state = initialState, action) => {
     switch (action.type) {
     case 'RECEIVE_GYMS':
-        return transformGyms(action.gyms)
+        return transformGyms(action.payload)
     case 'GET_GYMS':
         return state
     default:

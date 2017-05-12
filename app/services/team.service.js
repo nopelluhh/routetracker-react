@@ -14,7 +14,7 @@ function teamService() {
     }
 
     function getOne(queryCondition = {}) {
-        return team.findOne(queryCondition).populate('gyms')
+        return team.findOne(queryCondition).populate('gyms members')
     }
 
     function create(req) {

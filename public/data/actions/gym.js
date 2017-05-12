@@ -1,7 +1,7 @@
 export function receiveGyms(gyms) {
     return {
         type: 'RECEIVE_GYMS',
-        gyms
+        payload: gyms
     }
 }
 

@@ -11,6 +11,12 @@ class RouteList extends Component {
         })
     }
 
+    componentWillReceiveProps(next) {
+        if(next.routes) {
+            this.setState({routes: next.routes})
+        }
+    }
+
     constructor() {
         super()
         this.handleSort = this.handleSort.bind(this)
@@ -18,11 +24,11 @@ class RouteList extends Component {
 
     render() {
         return (
-      <table className='table table-mobile'>
+      <table className='table table-mobile table-fixed'>
         <RouteHeader handleSort={ this.handleSort } sort={this.state.sort} dir={this.state.dir}/>
         <tbody>
           { this.state.routes.map(route => (
-              <RouteRow key={ route._id + route.updated_at } route={ route } updateRoute={this.updateRoute} />
+              <RouteRow key={ route._id + route.updated_at } route={ route } updateRoute={this.updateRoute} team={this.props.team}/>
             )) }
         </tbody>
       </table>
@@ -60,6 +66,7 @@ class RouteList extends Component {
 
 RouteList.propTypes = {
     routes: PropTypes.array,
+    team: PropTypes.object,
     updateRoute: PropTypes.func
 }
 

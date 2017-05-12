@@ -10,7 +10,7 @@ function boulderController() {
 
     function current(req, res) {
         let id =  '58de9650cc711738fe322fc1' || req.user._id
-        generalService.getOne(team, {_id: id}, 'gyms')
+        generalService.getOne(team, {_id: id}, 'gyms members')
             .then(team => res.json(team))
             .catch(err => res.json(err))
     }

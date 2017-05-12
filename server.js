@@ -13,6 +13,8 @@ const routes = require('./app/routes')
 const mongoStore = require('connect-mongo')(session)
 const passportConfig = require('./config/passport/local')
 const morgan = require('morgan')
+const chokidar = require('chokidar')
+const watcher = chokidar.watch('./app')
 
 mongoose.promise = Promise
 
@@ -42,7 +44,7 @@ app.use(passport.session())
 app.use(passportConfig(passport))
 app.get('/', (req, res, next) => {
     console.log(req.user)
-    if(!req.user) {
+    if (!req.user) {
         res.sendFile(path.resolve(__dirname, './login/login.html'))
     } else {
         next()
@@ -51,6 +53,15 @@ app.get('/', (req, res, next) => {
 app.use(routes)
 mongoose.connect(process.env.MONGO_DB_URL)
 
-if(process.env.NODE_ENV != 'production') app.set('domain', process.env.HOST || 'localhost')
+if (process.env.NODE_ENV != 'production') app.set('domain', process.env.HOST || 'localhost')
+
+watcher.on('ready', function() {
+    watcher.on('all', function() {
+        console.log('Clearing /dist/ module cache from server')
+        Object.keys(require.cache).forEach(function(id) {
+            if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id]
+        })
+    })
+})
 
 app.listen(port, () => console.log(`listening on ${process.env.HOST}:${port}`))

@@ -17,6 +17,7 @@ class RtSwatch extends Component {
             backgroundColor: c.color || 'white',
             color: color.textColor(c.color),
             borderRadius: '3px',
+            height: '30px'
         }
 
         return (<span className={this.props.className} style={ style }>{ c.value || '' }</span>)

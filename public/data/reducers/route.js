@@ -4,11 +4,11 @@ const initialState = new Immutable.Map()
 function route(state = initialState, action) {
     switch (action.type) {
     case 'ADD_ROUTE':
-        return state.set(action.route._id, action.route)
+        return state.set(action.payload._id, action.payload)
     case 'RECEIVE_ROUTES':
-        return state.concat(action.routes.map(route => [route._id,route]))
+        return state.concat(action.payload.map(route => [route._id,route]))
     case 'UPDATE_ROUTE':
-        return state.set(action.route._id, action.route)
+        return state.set(action.payload._id, action.payload)
     default:
         return state
     }
