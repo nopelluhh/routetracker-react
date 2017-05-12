@@ -6,7 +6,8 @@
     "scripts": {
         "heroku-postbuild": "webpack -p --progress --colors",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "concurrently -k 'NODE_ENV=development webpack-dev-server' 'node server'",
+        "start": "node server",
+        "start:dev": "concurrently -k 'NODE_ENV=development webpack-dev-server' 'node server'",
         "start:mobile": "HOST=172.20.10.2 yarn start"
     },
     "repository": {
