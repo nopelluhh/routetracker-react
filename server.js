@@ -42,7 +42,11 @@ app.use(passport.session())
 app.use(passportConfig(passport))
 app.get('/', (req, res, next) => {
     console.log(req.user)
-    if(!req.user) res.sendFile(path.resolve(__dirname, './login/login.html'))
+    if(!req.user) {
+        res.sendFile(path.resolve(__dirname, './login/login.html'))
+    } else {
+        next()
+    }
 })
 app.use(routes)
 mongoose.connect(process.env.MONGO_DB_URL)
