@@ -91,6 +91,7 @@ module.exports = {
                 loader: 'url-loader?limit=10000&mimetype=application/font-woff2&name=css/[name][hash:7]we.[ext]',
                 options: {
                     outputPath: 'css/',
+                    publicPath: '/assets/css/',
                     limit: 10000
                 }
             }, {
@@ -98,6 +99,7 @@ module.exports = {
                 loader: 'file-loader?&name=[name].[ext]',
                 options: {
                     outputPath: 'css/',
+                    publicPath: '/assets/css/',
                     limit: 10000
                 }
             }

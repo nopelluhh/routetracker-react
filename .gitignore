@@ -48,3 +48,8 @@ public/dist/*hot-update.js
 # Environment
 .env
 
+# build
+
+build
+
+
