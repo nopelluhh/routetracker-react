@@ -46,6 +46,7 @@ app.get('/', (req, res, next) => {
 })
 app.use(routes)
 mongoose.connect(process.env.MONGO_DB_URL)
-app.set('domain', process.env.HOST || 'localhost')
+
+if(process.env.NODE_ENV != 'production') app.set('domain', process.env.HOST || 'localhost')
 
 app.listen(port, () => console.log(`listening on ${process.env.HOST}:${port}`))
