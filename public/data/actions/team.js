@@ -3,7 +3,7 @@ import {receiveGyms} from './gym'
 export function receiveTeam(team) {
     return {
         type: 'RECEIVE_TEAM',
-        team
+        payload: team
     }
 }
 

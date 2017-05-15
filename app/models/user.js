@@ -31,6 +31,7 @@ const User = new Schema({
         },
         pw: {
             type: String,
+            select: false,
             require: true
         }
     }

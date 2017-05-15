@@ -5,9 +5,9 @@ const initialState = {
 const wizard = (state = initialState, action) => {
     switch (action.type) {
     case 'UPDATE_NEW_ROUTE':
-        return Object.assign({}, state, { [action.field]: action.value})
+        return Object.assign({}, state, { [action.payload.field]: action.payload.value})
     case 'UPDATE_TAGS':
-        return Object.assign({}, state, {tags: toggleTag(state.tags, action.value)})
+        return Object.assign({}, state, {tags: toggleTag(state.tags, action.payload)})
     case 'RESET_WIZARD':
         return Object.assign({}, {gym: state.gym, tags: []})
     default:

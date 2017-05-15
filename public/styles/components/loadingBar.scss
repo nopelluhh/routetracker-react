@@ -5,9 +5,18 @@
     transform: translate(-50%, -50%); 
     left: 50%;
     width: 200px;
-    height: 10px;
+    height: 4px;
     background-color: $brand-primary;
     overflow: hidden
+}
+
+.load-bar-inline {
+    top: initial !important;
+    left: initial !important;
+    position: absolute;
+    transform: translate(-50%, 0);
+    margin: 10px 0;
+    display: inline-block;
 }
 
 .load-bar__bar {

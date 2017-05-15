@@ -35,4 +35,7 @@ function mapState(state) {
         colors: state.team.colors
     }
 }
+
 export default connect(mapState)(RtSwatch)
+
+export { RtSwatch }

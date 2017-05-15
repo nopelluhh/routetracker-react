@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rtSwatch tests should adjust style based on props 1`] = `
+<span
+  className={undefined}
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "borderRadius": "3px",
+      "color": "#fff",
+      "height": "30px",
+    }
+  }
+>
+  black
+</span>
+`;

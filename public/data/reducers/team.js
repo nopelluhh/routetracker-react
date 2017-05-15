@@ -22,7 +22,7 @@ const transformTeam = (team) => {
 const team = (state = initialState, action) => {
     switch (action.type) {
     case 'RECEIVE_TEAM':
-        return transformTeam(action.team)
+        return transformTeam(action.payload)
     case 'GET_TEAM':
         return state
     default:

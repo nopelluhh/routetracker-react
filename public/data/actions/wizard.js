@@ -1,15 +1,17 @@
 export function updateRoute(field, value) {
     return {
         type: 'UPDATE_NEW_ROUTE',
-        field,
-        value
+        payload: {
+            field,
+            value
+        }
     }
 }
 
 export function updateTags(value) {
     return {
         type: 'UPDATE_TAGS',
-        value
+        payload: value
     }
 }
 
