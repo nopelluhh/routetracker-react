@@ -57,6 +57,7 @@ if (process.env.NODE_ENV != 'production') app.set('domain', process.env.HOST || 
 
 watcher.on('ready', function() {
     watcher.on('all', function() {
+        console.log(require.cache)
         console.log('Clearing /dist/ module cache from server')
         Object.keys(require.cache).forEach(function(id) {
             if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id]

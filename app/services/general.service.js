@@ -25,6 +25,7 @@ function general() {
     }
 
     function getOne(model, queryCondition = {}, populate = '') {
+        model = models[model]
         return model.findOne(queryCondition).populate(populate)
     }
 
@@ -36,8 +37,9 @@ function general() {
 
     function update(model, req) {
         model = models[model]
+        const id = req.params.id === 'current'? req.user._id : req.params.id
         delete req.body.created_at
         delete req.body.updated_at
-        return model.findOneAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true})
+        return model.findOneAndUpdate({_id: id}, {$set: req.body}, {new: true})
     }
 }

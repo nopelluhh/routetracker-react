@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import d3 from 'services/d3'
+import React, { Component } from 'react'
+import * as d3 from 'd3'
 
 class RtBar extends Component {
     componentDidMount() {
@@ -8,7 +8,7 @@ class RtBar extends Component {
 
     render() {
         return (
-            <div ref={(el) => this.el = el}></div>
+            <div ref={ (el) => this.el = el }></div>
         )
     }
 }
@@ -16,12 +16,12 @@ class RtBar extends Component {
 export default RtBar
 
 function makeChart() {
-    if (!this.props.data) 
+    if (!this.props.data)
         return
     const data = this.props.data
 
-    const width = Number(this.props.width) || 500
-    const height = Number(this.props.height) || 200
+    const width = 94
+    const height = 94
     const barWidth = width / data.length
 
     const y = d3
@@ -38,15 +38,16 @@ function makeChart() {
     const chart = d3
         .select(this.el)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('viewBox', '-3 -3 100 100')
+        .attr('preserveAspectRatio', 'xMidYMin meet')
+        .classed('w100', true)
 
     const bar = chart
         .selectAll('g')
         .data(data)
         .enter()
         .append('g')
-        .attr('transform', function (d, i) {
+        .attr('transform', function(d, i) {
             return 'translate(' + i * barWidth + ', 0)'
         })
 
@@ -55,17 +56,20 @@ function makeChart() {
         .classed('rt-bar', true)
         .attr('width', barWidth - 1)
         .attr('height', 0)
-        .attr('opacity', (d) => + d
+        .attr('opacity', (d) => +d
             ? 1
             : 0.4)
-        .attr('y', (d) => {
-            return height - y(d) - 3
-        })
-        .attr('fill', function (d, i) {
+        .attr('y', height)
+        .attr('fill', function(d, i) {
             return rainbow(i)
         })
         .transition()
-        .duration(500)
-        .attr('height', (d) => y(d) + 3)
+        .delay(() => 400 - Math.random() * 100)
+        .duration(300)
+        .ease(d3.easeExpIn)
+        .attr('y', (d) => {
+            return height - y(d)
+        })
+        .attr('height', (d) => y(d))
 
 }

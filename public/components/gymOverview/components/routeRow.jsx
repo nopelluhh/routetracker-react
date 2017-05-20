@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import RtSwatch from 'components/common/rtSwatch'
 import FlexRow from 'components/common/flexRow'
 
+import {dateMath, renderIf} from 'rtutil'
+
 class RouteRow extends React.Component {
     state = {
         edit: false
@@ -14,16 +16,15 @@ class RouteRow extends React.Component {
         edit: PropTypes.bool,
         team: PropTypes.object,
         updateRoute: PropTypes.func,
-        deleteRoute: PropTypes.func
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.route.updated_at !== this.props.route.updated_at || this.state.edit !== nextState.edit
+        deleteRoute: PropTypes.func,
+        selected: PropTypes.bool,
+        ind: PropTypes.number,
+        selectHandler: PropTypes.func
     }
 
     render() {
         return this.state.edit ? (
-      <tr className="table-center">
+      <tr className={'table-center ' + (this.props.selected? 'route-row__selected':'')}>
         <td className="gym-row__date">
           <input type="text" className="input-sm form-control" name="set_on" onChange={ this.updateField } defaultValue={ new Date(this.props.route.set_on).toLocaleDateString() } />
         </td>
@@ -45,11 +46,15 @@ class RouteRow extends React.Component {
             <span onClick={ this.deleteRoute } className="glyphicon glyphicon-trash"></span>
           </FlexRow>
         </td>
+        <td className="hidden-sm">
+          <input onMouseDown={this.props.selectHandler.mouseDown} type="checkbox" checked={this.props.selected} data-index={this.props.ind}/>
+        </td>
       </tr>
       ) : (
-      <tr className="table-center">
+      <tr className={'table-center ' + (this.props.selected? 'route-row__selected':'')}>
         <td className="gym-row__date">
           { new Date(this.props.route.set_on).toLocaleDateString() }
+          <span>{' (' + dateMath.weeksOld(this.props.route.set_on) + ' weeks old)'}</span>
         </td>
         <td>
           { this.props.route.grade }
@@ -62,6 +67,9 @@ class RouteRow extends React.Component {
         </td>
         <td onClick={ this.toggleEdit }>
           <span className="glyphicon glyphicon-pencil"></span>
+        </td>
+        <td className="hidden-sm">
+          <input onMouseDown={this.props.selectHandler.mouseDown} type="checkbox" checked={this.props.selected} data-index={this.props.ind}/>
         </td>
       </tr>
       )

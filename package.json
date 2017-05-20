@@ -5,9 +5,9 @@
     "main": "server.js",
     "scripts": {
         "heroku-postbuild": "webpack -p --progress --colors",
-        "test": "jest",
+        "test": "jest --watchAll",
         "start": "node server",
-        "start:dev": "concurrently -k 'NODE_ENV=development webpack-dev-server' 'node server'",
+        "start:dev": "concurrently -k 'NODE_ENV=development webpack-dev-server' 'node server' 'jest --watchAll'",
         "start:wp": "NODE_ENV=development webpack-dev-server",
         "start:mobile": "HOST=172.20.10.2 yarn start"
     },
@@ -22,7 +22,10 @@
     },
     "jest": {
         "verbose": true,
-        "moduleDirectories": ["node_modules", "public"]
+        "moduleDirectories": [
+            "node_modules",
+            "public"
+        ]
     },
     "homepage": "https://github.com/nopelluhh/routetracker#readme",
     "dependencies": {
@@ -49,6 +52,7 @@
         "d3": "^4.7.3",
         "d3-tip": "^0.7.1",
         "dotenv": "^4.0.0",
+        "esformatter-jsx": "^8.0.0",
         "eslint": "^3.18.0",
         "eslint-plugin-react": "^6.10.3",
         "express": "^4.15.2",
@@ -92,5 +96,27 @@
     },
     "devDependencies": {
         "nodemon": "^1.11.0"
+    },
+    "esformatter": {
+        "plugins": [
+            "esformatter-jsx"
+        ],
+        "jsx": {
+            "formatJSXExpressions": true,
+            "JSXExpressionsSingleLine": true,
+            "formatJSX": true,
+            "attrsOnSameLineAsTag": false,
+            "maxAttrsOnTag": 1,
+            "firstAttributeOnSameLine": false,
+            "spaceInJSXExpressionContainers": " ",
+            "alignWithFirstAttribute": true,
+            "htmlOptions": {
+                "brace_style": "collapse",
+                "indent_char": " ",
+                "indent_size": 2,
+                "max_preserve_newlines": 2,
+                "preserve_newlines": true
+            }
+        }
     }
 }

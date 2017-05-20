@@ -13,7 +13,7 @@ import RouteList from './components/routeList'
 import { getTeam } from 'data/actions/team'
 import { getRoutesByGym, putRoute } from 'data/actions/route'
 
-import π from 'util.js'
+import pi from 'rtutil'
 
 class GymOverview extends Component {
     state = {
@@ -83,7 +83,8 @@ class GymOverview extends Component {
                     loaded: true
                 })
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log(err)
                 this.setState({
                     error: true
                 })
@@ -96,8 +97,8 @@ class GymOverview extends Component {
 function mapState(state, ownProps) {
     let gym = state.gyms.filter(gym => gym.url === ownProps.match.params.name)[0]
     let routes = state.routes.filter(route => route.gym === gym._id)
-    let hash = routes.hashCode()
     let arr = routes.toArray()
+    arr.forEach((route, ind) => route.ind = ind)
     return {
         gym: gym,
         data: arr,
@@ -117,7 +118,7 @@ function mapDispatch(dispatch) {
 export default connect(mapState, mapDispatch)(GymOverview)
 
 function transformRoutes(boulders) {
-    let sorted = π.buckets(boulders.map(boulder => boulder.grade), π.range(13))
+    let sorted = pi.buckets(boulders.map(boulder => boulder.grade), pi.range(13))
     return Object.keys(sorted).map(key => {
         return {
             grade: key,

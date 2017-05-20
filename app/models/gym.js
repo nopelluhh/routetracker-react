@@ -6,10 +6,6 @@ const Gym = new Schema({
         type: String,
         require: true
     },
-    // teams: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'team'
-    // }],
     url: {
         type: String,
         require: true

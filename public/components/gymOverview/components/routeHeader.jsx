@@ -15,11 +15,12 @@ const RouteHeader = (props) => {
     return (
       <thead>
         <tr className="table-center">
-          <th onClick={props.handleSort('created_at')}>Date {arrow('created_at')}</th>
+          <th onClick={props.handleSort('set_on')}>Date {arrow('set_on')}</th>
           <th onClick={props.handleSort('grade')}>Grade {arrow('grade')}</th>
           <th onClick={props.handleSort('color')}>Color {arrow('color')}</th>
           <th onClick={props.handleSort('setter')}>Setter {arrow('setter')}</th>
           <th>Edit</th>
+          <th>Select</th>
         </tr>
       </thead>
     )

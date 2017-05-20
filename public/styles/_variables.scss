@@ -88,7 +88,7 @@ $padding-xs-vertical: 1px !default;
 $padding-xs-horizontal: 5px !default;
 $line-height-large: 1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small: 1.5 !default;
-$border-radius-base: 3px !default;
+$border-radius-base: 2px !default;
 $border-radius-large: 10px !default;
 $border-radius-small: 3px !default;
 //** Global color for active items (e.g., navs or dropdowns).
@@ -120,7 +120,7 @@ $table-border-color: #ddd !default;
 //## For each of Bootstrap's buttons, define text, background and border color.
 $btn-font-weight: normal !default;
 $btn-default-color: #444 !default;
-$btn-default-bg: #fff !default;
+$btn-default-bg: #DDD !default;
 $btn-default-border: transparent !default;
 $btn-primary-color: #fff !default;
 $btn-primary-bg: $brand-primary !default;

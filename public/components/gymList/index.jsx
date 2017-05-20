@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
 import GymItem from './gymItem'
 import LoadBar from 'components/common/loadBar'
 import LoadContainer from 'components/common/loadContainer'
-import { connect } from 'react-redux'
-
-
-function listGyms(gyms) {
-    return gyms.map(gym => (<GymItem key={ gym._id } gym={ gym } className="gym-item" />))
-}
 
 class GymList extends Component {
+
+    static propTypes = {
+        gyms: PropTypes.array.isRequired
+    }
     render() {
         return (
             <div>
@@ -19,7 +20,7 @@ class GymList extends Component {
                     <LoadBar/>
                 </div>
                 <div key="1" className="gym-list">
-                  { listGyms(this.props.gyms) }
+                  { this.props.gyms.map(gym => (<GymItem key={ gym._id } gym={ gym } className="gym-item" />)) }
                 </div>
               </LoadContainer>
             </div>

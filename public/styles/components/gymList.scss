@@ -7,6 +7,7 @@
 }
 
 .gym-item {
+    position: relative;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-height: 200px;
@@ -15,27 +16,42 @@
     text-align: center;
     border-radius: 5px;
     flex: 0 0 auto;
-    &:hover {
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
     min-width: 100%;
-    @media (min-width: 500p x) {
+    @media (min-width: 500px) {
         min-width: 45%
     }
     @media (min-width: $screen-sm - 1) {
         min-width: 30%;
     }
+    &:after {
+        content: " ";
+        display: block;
+        padding-bottom: 100%;
+    }
+    &>* {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .gym-title {
-    color: black;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
     display: inline-block;
-    white-space: nowrap;
     padding: 0 10px;
-    margin: 10px 0;
     font-size: 1.7em;
+    border-radius: $border-radius-base;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: background-color 0.2s linear;
+
+    &:hover {
+            background-color: rgba(255, 255, 255, 0.8)
+    }
 }
+
 .gym-preview {
     min-height: 210px;
 }
-

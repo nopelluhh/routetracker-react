@@ -56,15 +56,17 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Raleway:300,400,500,700
     .btn-#{$class} {
         &:focus {
             outline: none !important;
-            box-shadow: 0 0 4px #DDD !important;
+            box-shadow: none; //0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
             background-color: $bg;
         }
         &:hover,
         &:active:hover {
-            background-color: darken($bg, 6%);
+            background-color: $bg !important;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.16), 0 2px 3px rgba(0,0,0,0.23) !important;
         }
         &:active {
-            @include box-shadow(0px 0px 4px rgba(0, 0, 0, .4));
+            box-shadow: none; //0 2px 6px rgba(0,0,0,0.16), 0 2px 6px rgba(0,0,0,0.23) !important;
         }
         @include ripple($color);
     }
@@ -80,16 +82,15 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Raleway:300,400,500,700
 .btn {
     text-transform: uppercase;
     border: none;
-    @include box-shadow(0px 0px 4px rgba(0, 0, 0, .4));
-    @include transition(all 0.4s);
-    &:focus {}
+    box-shadow: none; // 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     &-link {
         border-radius: $btn-border-radius-base;
-        @include box-shadow(none);
+        box-shadow: none; //@include box-shadow(none);
         color: $btn-default-color;
         &:hover,
         &:focus {
-            @include box-shadow(none);
+            box-shadow: none; // @include box-shadow(none);
             color: $btn-default-color;
             text-decoration: none;
         }
@@ -427,9 +428,9 @@ input[type="checkbox"],
 .nav-tabs {
     >li>a,
     >li>a:focus {
+        outline: none;
         margin-right: 0;
         background-color: transparent;
-        border: none;
         color: $navbar-default-link-color;
         @include box-shadow(inset 0 -1px 0 #ddd);
         @include transition(all 0.2s);
@@ -441,26 +442,15 @@ input[type="checkbox"],
     }
     &>li.active>a,
     &>li.active>a:focus {
-        border: none;
         @include box-shadow(inset 0 -2px 0 $brand-primary);
         color: $brand-primary;
+                margin-right: 0;
         &:hover {
-            border: none;
             color: $brand-primary;
         }
     }
     &>li.disabled>a {
         @include box-shadow(inset 0 -1px 0 #ddd);
-    }
-    &.nav-justified {
-        &>li>a,
-        &>li>a:hover,
-        &>li>a:focus,
-        &>.active>a,
-        &>.active>a:hover,
-        &>.active>a:focus {
-            border: none;
-        }
     }
     .dropdown-menu {
         margin-top: 0;

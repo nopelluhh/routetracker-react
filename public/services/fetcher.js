@@ -26,6 +26,7 @@ class fetcher {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: formatBody(data)
         })
         .then(res => res.json())

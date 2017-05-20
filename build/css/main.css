@@ -37,9 +37,9 @@
   .btn-default:focus {
     outline: none !important;
     box-shadow: 0 0 4px #DDD !important;
-    background-color: #fff; }
+    background-color: #EEE; }
   .btn-default:hover, .btn-default:active:hover {
-    background-color: #f0f0f0; }
+    background-color: #dfdfdf; }
   .btn-default:active {
     -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4); }
@@ -1025,8 +1025,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/assets/css/f4769f9bdb7466be65088239c12046d1.eot);
-  src: url(/assets/css/f4769f9bdb7466be65088239c12046d1.eot?#iefix) format("embedded-opentype"), url(/assets/css/448c34a56d699c29117adc64c43affeb.woff2) format("woff2"), url(/assets/css/fa2772327f55d8198301fdb8bcfc8158.woff) format("woff"), url(/assets/css/e18bbf611f2a2e43afc071aa2f4e1512.ttf) format("truetype"), url(/assets/css/89889688147bd7575d6327160d64e760.svg#glyphicons_halflingsregular) format("svg"); }
+  src: url(http://localhost:8081/assets/f4769f9bdb7466be65088239c12046d1.eot);
+  src: url(http://localhost:8081/assets/f4769f9bdb7466be65088239c12046d1.eot?#iefix) format("embedded-opentype"), url(/assets/css/448c34a56d699c29117adc64c43affeb.woff2) format("woff2"), url(/assets/css/fa2772327f55d8198301fdb8bcfc8158.woff) format("woff"), url(http://localhost:8081/assets/e18bbf611f2a2e43afc071aa2f4e1512.ttf) format("truetype"), url(http://localhost:8081/assets/89889688147bd7575d6327160d64e760.svg#glyphicons_halflingsregular) format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -3615,27 +3615,27 @@ fieldset[disabled] a.btn {
 
 .btn-default {
   color: #444;
-  background-color: #fff;
+  background-color: #EEE;
   border-color: transparent; }
   .btn-default:focus, .btn-default.focus {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #d5d5d5;
     border-color: transparent; }
   .btn-default:hover {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #d5d5d5;
     border-color: transparent; }
   .btn-default:active, .btn-default.active,
   .open > .btn-default.dropdown-toggle {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #d5d5d5;
     border-color: transparent; }
     .btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus,
     .open > .btn-default.dropdown-toggle:hover,
     .open > .btn-default.dropdown-toggle:focus,
     .open > .btn-default.dropdown-toggle.focus {
       color: #444;
-      background-color: #d4d4d4;
+      background-color: #c3c3c3;
       border-color: transparent; }
   .btn-default:active, .btn-default.active,
   .open > .btn-default.dropdown-toggle {
@@ -3644,10 +3644,10 @@ fieldset[disabled] a.btn {
   fieldset[disabled] .btn-default:hover,
   fieldset[disabled] .btn-default:focus,
   fieldset[disabled] .btn-default.focus {
-    background-color: #fff;
+    background-color: #EEE;
     border-color: transparent; }
   .btn-default .badge {
-    color: #fff;
+    color: #EEE;
     background-color: #444; }
 
 .btn-primary {
@@ -5221,9 +5221,17 @@ button.close {
   transform: translate(-50%, -50%);
   left: 50%;
   width: 200px;
-  height: 10px;
+  height: 4px;
   background-color: #ec134d;
   overflow: hidden; }
+
+.load-bar-inline {
+  top: initial !important;
+  left: initial !important;
+  position: absolute;
+  transform: translate(-50%, 0);
+  margin: 10px 0;
+  display: inline-block; }
 
 .load-bar__bar {
   border-radius: 3px;
@@ -5260,8 +5268,12 @@ button.close {
     left: 0;
     width: 100%; } }
 
-.table-center > td, .table-center > th {
+.table-center > td,
+.table-center > th {
   text-align: center; }
+  .table-center > td > input,
+  .table-center > th > input {
+    text-align: center; }
 
 @media (max-width: 768px) {
   .table-mobile > thead > tr > th,
@@ -5277,6 +5289,9 @@ button.close {
 
 .gym-row__date {
   width: 150px; }
+
+.table-fixed {
+  table-layout: fixed; }
 
 .rt-bar:hover {
   opacity: 0.9; }
@@ -5556,6 +5571,9 @@ button.close {
   display: flex;
   justify-content: space-around; }
 
+.flex-row > * {
+  margin: 0 10px; }
+
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
   color: white;
   background-color: #ec134d; }
@@ -5605,3 +5623,5 @@ input:focus {
   border-radius: 5px;
   padding: 0 10px 3px 10px;
   margin: 0 0 15px 0; }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjc3MvbWFpbi5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

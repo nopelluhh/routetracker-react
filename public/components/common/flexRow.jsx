@@ -10,7 +10,7 @@ const styles = (props) => {
 }
 
 const flexRow = (props) => (
-    <div style={ styles(props) }>
+    <div style={ styles(props) } className='flex-row'>
       { props.children }
     </div>
 )

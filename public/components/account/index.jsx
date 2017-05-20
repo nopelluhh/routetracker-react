@@ -1,82 +1,32 @@
 import React, { Component } from 'react'
+import PT from 'prop-types'
+import { connect } from 'react-redux'
 
-import LoadContainer from 'components/common/loadContainer'
-import LoadBar from 'components/common/loadBar'
-import RtCard from 'components/common/rtCard'
-import RtForm from 'components/common/form'
+import { Tabs, Tab } from 'react-bootstrap'
+import { LoadBar, RtCard, LoadContainer } from 'components/common'
+import BasicInfo from './components/basicInfo'
+import TeamInfo from './components/teamInfo'
 
-import fetcher from 'services/fetcher'
-
+import { getUser } from 'data/actions/user'
 
 class Account extends Component {
     state = {
-        loaded: false
+        loaded: false,
+        pending: false
     }
 
-    fields = () => [
-        ['General',
-            {
-                label: 'Username',
-                name: 'username',
-                type: 'text',
-                onBlur: this.fieldHandler('username')
-            },
-
-            {
-                label: 'E-mail',
-                name: 'email',
-                type: 'email',
-                onBlur: this.fieldHandler('email')
-            }],
-        ['Setting', {
-            label: 'Nickname',
-            name: 'nick',
-            type: 'text',
-            onBlur: this.fieldHandler('nick')
-        }]
-    ]
-
-    values = {
-        username: 'nopelluhh',
-        email: 'napeller@gmail.com',
-        nick: 'NP'
+    static propTypes = {
+        getUser: PT.func,
+        user: PT.object
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                loaded: true
+        this.props.getUser()
+            .then(() => {
+                this.setState({
+                    loaded: true
+                })
             })
-        }, 1000)
-    }
-
-    toggleEdit = () => {
-        this.setState({
-            edit: !this.state.edit
-        })
-    }
-
-    saveEdit = () => {
-        this.setState({fetching: true})
-
-        fetcher.update('')
-
-        setTimeout(() => {
-            this.setState({
-                fetching: false
-            })
-
-            this.setState({
-                edit: !this.state.edit
-            })
-        }, 5000)
-
-    }
-
-    fieldHandler = (field) => {
-        return (e) => {
-            this.values[field] = e.target.value
-        }
     }
 
     render() {
@@ -84,13 +34,41 @@ class Account extends Component {
             <LoadContainer loaded={ this.state.loaded }>
               <LoadBar/>
               <RtCard title="Your Account">
-                { this.state.edit ? (<span><a onClick={ this.toggleEdit }>Cancel</a> | <a onClick={ this.saveEdit }>Save</a></span>) : (<a onClick={ this.toggleEdit }>Edit</a>) }
-                {this.state.fetching? <div><LoadBar inline/></div> : null}
-                <RtForm fields={ this.fields() } values={ this.values } edit={ this.state.edit } />
+                <Tabs id="account-tabs" animation={false} className="nav-justified">
+                  <Tab title="Basic Info" eventKey={1}>
+                    <BasicInfo user={this.props.user}/>
+                  </Tab>
+                  <Tab title="Team Info" eventKey={2}>
+                      <TeamInfo/>
+                  </Tab>
+                </Tabs>
               </RtCard>
             </LoadContainer>
         )
     }
+
+ 
+    values = {
+        username: 'nopelluhh',
+        email: 'napeller@gmail.com',
+        nick: 'NP'
+    }
+
+    getCurrentState = (data) => {
+        this.data = data
+    }
 }
 
-export default Account
+function mapState(state) {
+    return {
+        user: state.user
+    }
+}
+
+function mapDispatch(dispatch) {
+    return {
+        getUser: () => dispatch(getUser())
+    }
+}
+
+export default connect(mapState, mapDispatch)(Account)

@@ -48,6 +48,9 @@ module.exports = {
             '/api': `http://${host}:8080`
         }
     },
+    node: {
+        fs: 'empty'
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
