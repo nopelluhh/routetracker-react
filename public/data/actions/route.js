@@ -19,6 +19,13 @@ export function updateRoute(route) {
     }
 }
 
+export function removeRoutes(arr) {
+    return {
+        type: 'REMOVE_ROUTES',
+        payload: arr
+    }
+}
+
 export function getRoutesByGym(id) {
     return (dispatch, getState, fetcher) => {
         return fetcher.get('route/boulder/gym', {

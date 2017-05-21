@@ -19,7 +19,7 @@ class RouteRow extends React.Component {
         deleteRoute: PropTypes.func,
         selected: PropTypes.bool,
         ind: PropTypes.number,
-        selectHandler: PropTypes.func
+        selectHandler: PropTypes.object
     }
 
     render() {

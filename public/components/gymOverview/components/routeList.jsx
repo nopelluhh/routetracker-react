@@ -9,15 +9,16 @@ import pi from 'rtutil'
 class RouteList extends Component {
     componentWillMount() {
         this.setState({
-            routes: this.props.routes,
+            routes: sortOn([...this.props.routes], 'set_on'),
             range: []
         })
     }
 
     componentWillReceiveProps(next) {
         if (next.routes) {
+            let routes = sortOn(next.routes, this.state.sort || 'set_on')
             this.setState({
-                routes: next.routes
+                routes: this.state.dir === 'desc'? routes : routes.reverse()
             })
         }
     }
@@ -25,7 +26,12 @@ class RouteList extends Component {
     render() {
         return (
             <table className='table table-mobile table-fixed'>
-              <RouteHeader handleSort={ this.handleSort } sort={ this.state.sort } dir={ this.state.dir } />
+              <RouteHeader
+                           handleSort={ this.handleSort }
+                           sort={ this.state.sort }
+                           dir={ this.state.dir }
+                           deleteHandler={ this.deleteHandler } 
+                           selected={this.state.range.length > 0}/>
               <tbody>
                 { this.state.routes.map((route, ind) => (
                       <RouteRow
@@ -47,6 +53,7 @@ class RouteList extends Component {
             e.preventDefault()
 
             let modifier = e.ctrlKey || e.metaKey
+            let shift = e.shiftKey
             let ind = Number(e.target.dataset.index)
             let range
 
@@ -54,12 +61,17 @@ class RouteList extends Component {
                 let l = Math.min(this.lastSelected, ind)
                 let h = Math.max(this.lastSelected, ind)
                 let selected = pi.range(l, h + 1)
-                
                 this.lastSelected = undefined
                 range = this.state.range.concat(selected)
             } else if (modifier && !this.lastSelected) {
                 this.lastSelected = ind
                 range = this.state.range.concat(ind)
+            } else if (shift && this.state.range.length) {
+                let l = Math.min(...this.state.range)
+                let h = Math.max(...this.state.range)
+                let selected = ind <= h ? pi.range(ind, h + 1) : pi.range(l, ind + 1)
+                this.lastSelected = undefined
+                range = this.state.range.concat(selected)
             } else {
                 this.lastSelected = ind
                 range = this.state.range.includes(ind) && this.state.range.length === 1 ? [] : [ind]
@@ -69,6 +81,16 @@ class RouteList extends Component {
                 range
             })
         }
+    }
+
+    deleteHandler = () => {
+        const inds = [...new Set(this.state.range)]
+        const ids = inds.map(ind => this.state.routes[ind]._id)
+
+        this.props.removeRoutes(ids)
+        this.setState({
+            range: []
+        })
     }
 
     handleSort = (param) => {
@@ -105,7 +127,8 @@ class RouteList extends Component {
 RouteList.propTypes = {
     routes: PropTypes.array,
     team: PropTypes.object,
-    updateRoute: PropTypes.func
+    updateRoute: PropTypes.func,
+    removeRoutes: PropTypes.func
 }
 
 function sortOn(arr, prop) {

@@ -11,7 +11,7 @@ import StatsCard from './components/statsCard'
 import RouteList from './components/routeList'
 
 import { getTeam } from 'data/actions/team'
-import { getRoutesByGym, putRoute } from 'data/actions/route'
+import { getRoutesByGym, putRoute, removeRoutes } from 'data/actions/route'
 
 import pi from 'rtutil'
 
@@ -57,7 +57,7 @@ class GymOverview extends Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-12">
-                        <RouteList routes={this.props.data} updateRoute={this.props.updateRoute} team={this.props.team}/>
+                        <RouteList routes={this.props.data} updateRoute={this.props.updateRoute} removeRoutes={this.props.removeRoutes} team={this.props.team}/>
                     </div>
                 </div>
               </section>
@@ -111,7 +111,8 @@ function mapDispatch(dispatch) {
     return {
         getTeam: () => dispatch(getTeam()),
         getRoutes: (id) => dispatch(getRoutesByGym(id)),
-        updateRoute: (route) => dispatch(putRoute(route))
+        updateRoute: (route) => dispatch(putRoute(route)),
+        removeRoutes: (arr) => dispatch(removeRoutes(arr))
     }
 }
 
