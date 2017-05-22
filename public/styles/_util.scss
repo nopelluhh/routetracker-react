@@ -41,7 +41,7 @@
 
 .col-np {
     @extend .np-l;
-    @media (max-width: $screen-sm) {
+    @media (max-width: map-get($container-max-widths, sm)) {
         padding-left: 15px !important;
         padding-top: 5px;
     }
@@ -72,7 +72,7 @@
 }
 
 .br-2 {
-    border-radius: $border-radius-large
+    border-radius: $border-radius-lg
 }
 
 .button-group {

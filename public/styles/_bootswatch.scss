@@ -41,8 +41,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Raleway:300,400,500,700
             input[type=text],
             input[type=password] {
                 color: #fff;
-                @include box-shadow(inset 0 -1px 0 $navbar-inverse-link-color);
-                @include placeholder($navbar-inverse-link-color);
+                @include box-shadow(inset 0 -1px 0 $navbar-inverse-color);
                 &:focus {
                     @include box-shadow(inset 0 -2px 0 #fff);
                 }
@@ -72,26 +71,26 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Raleway:300,400,500,700
     }
 }
 
-@include btn(default, $btn-default-bg, $btn-default-color);
+@include btn(default, $btn-secondary-bg, $btn-secondary-color);
 @include btn(primary, $btn-primary-bg, $btn-primary-color);
 @include btn(success, $btn-success-bg, $btn-success-color);
 @include btn(info, $btn-info-bg, $btn-info-color);
 @include btn(warning, $btn-warning-bg, $btn-warning-color);
 @include btn(danger, $btn-danger-bg, $btn-danger-color);
-@include btn(link, #fff, $btn-default-color);
+@include btn(link, #fff, $btn-secondary-color);
 .btn {
     text-transform: uppercase;
     border: none;
     box-shadow: none; // 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     &-link {
-        border-radius: $btn-border-radius-base;
+        border-radius: $btn-border-radius;
         box-shadow: none; //@include box-shadow(none);
-        color: $btn-default-color;
+        color: $btn-secondary-color;
         &:hover,
         &:focus {
             box-shadow: none; // @include box-shadow(none);
-            color: $btn-default-color;
+            color: $btn-secondary-color;
             text-decoration: none;
         }
         .disabled, // Although btn-link is intended for buttons, which want to look like link, I include here a.disable for the sake of consistency
@@ -100,7 +99,7 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Raleway:300,400,500,700
             &:hover,
             &:active:hover {
                 background-color: #fff;
-                color: $btn-default-color;
+                color: $btn-secondary-color;
             }
         }
     }
@@ -198,10 +197,10 @@ input[type=number],
     }
     &.input {
         &-sm {
-            font-size: $font-size-small;
+            font-size: $font-size-sm;
         }
         &-lg {
-            font-size: $font-size-large;
+            font-size: $font-size-lg;
         }
     }
 }
@@ -227,10 +226,10 @@ select.form-control {
     }
     &.input {
         &-sm {
-            font-size: $font-size-small;
+            font-size: $font-size-sm;
         }
         &-lg {
-            font-size: $font-size-large;
+            font-size: $font-size-lg;
         }
     }
     &:focus {
@@ -293,7 +292,7 @@ input[type="radio"],
         left: 0;
         top: -3px;
         background-color: $brand-primary;
-        @include scale(0);
+        transform: scale(0)
     }
     &:after {
         position: relative;
@@ -301,7 +300,7 @@ input[type="radio"],
         border: 2px solid $gray;
     }
     &:checked:before {
-        @include scale(0.5);
+        transform: scale(0.5)
     }
     &:disabled:checked:before {
         background-color: $gray-light;
@@ -352,7 +351,7 @@ input[type="checkbox"],
         border: 2px solid #fff;
         border-top-width: 0;
         border-left-width: 0;
-        @include rotate(45deg);
+        transform: rotate(45deg);
     }
     &:checked:after {
         background-color: $brand-primary;
@@ -431,7 +430,7 @@ input[type="checkbox"],
         outline: none;
         margin-right: 0;
         background-color: transparent;
-        color: $navbar-default-link-color;
+        color: $navbar-light-color;
         @include box-shadow(inset 0 -1px 0 #ddd);
         @include transition(all 0.2s);
         &:hover {
@@ -495,18 +494,6 @@ input[type="checkbox"],
                 z-index: -1;
                 background-color: lighten($progress-bar-bg, 35%);
             }
-        }
-        &-success:last-child.progress-bar:before {
-            background-color: lighten($progress-bar-success-bg, 35%);
-        }
-        &-info:last-child.progress-bar:before {
-            background-color: lighten($progress-bar-info-bg, 45%);
-        }
-        &-warning:last-child.progress-bar:before {
-            background-color: lighten($progress-bar-warning-bg, 35%);
-        }
-        &-danger:last-child.progress-bar:before {
-            background-color: lighten($progress-bar-danger-bg, 25%);
         }
     }
 }

@@ -20,7 +20,7 @@
     @media (min-width: 500px) {
         min-width: 45%
     }
-    @media (min-width: $screen-sm - 1) {
+    @media (min-width: map-get($container-max-widths, sm) - 1) {
         min-width: 30%;
     }
     &:after {
@@ -43,7 +43,7 @@
     display: inline-block;
     padding: 0 10px;
     font-size: 1.7em;
-    border-radius: $border-radius-base;
+    border-radius: $border-radius;
     background-color: rgba(255, 255, 255, 0.6);
     transition: background-color 0.2s linear;
 

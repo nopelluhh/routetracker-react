@@ -25,7 +25,7 @@ class RouteList extends Component {
 
     render() {
         return (
-            <table className='table table-mobile table-fixed'>
+            <table className='table table-sm table-mobile table-fixed'>
               <RouteHeader
                            handleSort={ this.handleSort }
                            sort={ this.state.sort }
