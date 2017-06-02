@@ -5,29 +5,37 @@ import * as d3 from 'd3'
 import d3tip from 'd3-tip'
 d3.tip = d3tip
 
-class RtBar extends Component {
+class RtBigBar extends Component {
     static propTypes = {
         data: PropTypes.array,
-        goal: PropTypes.array
+        goal: PropTypes.array,
+        type: PropTypes.string
     }
 
     componentDidMount() {
-        this.makeChart.apply(this)
+        this.chart = d3.select(this.el)
+        this.makeChart()
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.data) {
-            this.updateChart.call(this, nextProps.data)
+        if(nextProps.type !== this.props.type) {
+            this.chart.selectAll('*').remove()
+            this.makeChart(nextProps.data)
+        } else if (nextProps.data) {
+            this.updateChart(nextProps.data)
         }
     }
 
     render() {
         return (
-            <div ref={ (el) => this.el = el }></div>
+            <div>
+                <svg viewBox="-5 -5 500 300" preserveAspectRatio="xMidYMin meet" className="w100 chart" ref={ (el) => this.el = el }>
+                </svg>
+            </div>
         )
     }
 
-    updateChart(data) {
+    updateChart = (data) => {
         var svg = d3.select(this.el)
 
         this.y = d3
@@ -36,8 +44,6 @@ class RtBar extends Component {
                 0, d3.max(data, (d) => d.count)
             ])
             .range([0, this.height])
-
-        svg.selectAll('.bar-group')
 
     // Make the changes
         svg.selectAll('.rt-bar')
@@ -48,15 +54,19 @@ class RtBar extends Component {
                 return this.height - this.y(d.count)
             })
             .attr('height', (d) => this.y(d.count) + 3)
+
+        svg.selectAll('.rt-marker')
+            .data(data)
+            .text(d => d.grade)
     }
 
-    makeChart() {
+    makeChart = (data) => {
         if (!this.props.data)
             return
-        const data = this.props.data
+        data = data || this.props.data
 
         this.width = 490
-        this.height = 288
+        this.height = 285
         const barWidth = this.width / data.length
 
         this.y = d3
@@ -74,14 +84,6 @@ class RtBar extends Component {
             .domain([320, 500]) // expected limits of SVG width
             .range([30, 15]) // when SVG is 1/2 width, text will be 2/3 size
             .clamp(true)
-
-        this.chart = d3
-            .select(this.el)
-            .append('svg')
-            .attr('viewBox', '-5 -5 500 300')
-            .attr('preserveAspectRatio', 'xMidYMin meet')
-            .classed('w100', true)
-            .classed('chart bs-1', true)
 
         const bar = this.chart
             .selectAll('g')
@@ -105,9 +107,11 @@ class RtBar extends Component {
         bar.append('rect')
             .classed('rt-bar', true)
             .attr('width', barWidth - 5)
+            .attr('rx', 3)
+            .attr('ry', 3)
             .attr('height', 0)
             .attr('opacity', (d) => +d.count ? 1 : 0.4)
-            .attr('y', this.height + 1)
+            .attr('y', this.height + 6)
             .attr('fill', function(d, i) {
                 return rainbow(i)
             })
@@ -120,7 +124,7 @@ class RtBar extends Component {
             .attr('y', (d) => {
                 return this.height - this.y(d.count)
             })
-            .attr('height', (d) => this.y(d.count) + 3)
+            .attr('height', (d) => this.y(d.count) + 6)
 
         bar.append('text')
             .classed('rt-marker', true)
@@ -146,5 +150,5 @@ class RtBar extends Component {
     }
 }
 
-export default RtBar
+export default RtBigBar
 

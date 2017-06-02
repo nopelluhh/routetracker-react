@@ -86,7 +86,7 @@ class π {
 
 export default new π()
 
-export const renderIf = condition => element => condition && element
+export const renderIf = condition => element => (condition && element) || '' 
 
 export const dateMath = (function() {
 
@@ -108,3 +108,5 @@ export const dateMath = (function() {
     }
 
 })()
+
+export const sleep = (time) => () => new Promise(resolve => setTimeout(resolve, time))

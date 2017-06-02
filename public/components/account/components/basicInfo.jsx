@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {RtForm} from 'components/common'
+import { RtForm } from 'components/common'
 
 import fetcher from 'services/fetcher'
-import pi from 'rtutil'
+import pi, { sleep } from 'rtutil'
 
 class BasicInfo extends Component {
     state = {  }
@@ -32,12 +32,14 @@ class BasicInfo extends Component {
         this.values = pi.expandSimpleObject(data)
 
         return fetcher.update('users/current', data)
+            .then(sleep(1000))
             .then(() => {
                 this.setState({
                     pending: false
                 })
                 return data
             })
+
 
     }
 
@@ -52,7 +54,7 @@ class BasicInfo extends Component {
             },
             {
                 label: 'E-mail',
-                name: 'local.email',
+                name: 'email',
                 type: 'email',
                 validate: this.validateEmail
             }],

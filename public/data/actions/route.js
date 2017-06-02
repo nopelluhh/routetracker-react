@@ -28,7 +28,7 @@ export function removeRoutes(arr) {
 
 export function getRoutesByGym(id) {
     return (dispatch, getState, fetcher) => {
-        return fetcher.get('route/boulder/gym', {
+        return fetcher.get(`route/gym/${id}`, {
             gym: id
         }).then(routes => {
             dispatch(receiveRoutes(routes))

@@ -83,3 +83,15 @@
 .flex-row>* {
     margin: 0 10px
 }
+
+.icon {
+  width: 12px;
+  height: 12px;
+  &-black {
+      fill:rgba(0, 0, 0, 0.52);
+  }
+}
+
+.seperator {
+    opacity: 0;
+}

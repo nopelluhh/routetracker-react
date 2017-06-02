@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import GymItem from './gymItem'
-import LoadBar from 'components/common/loadBar'
-import LoadContainer from 'components/common/loadContainer'
+import { LoadBar, LoadContainer, RtCard }from 'components/common'
 
 class GymList extends Component {
 
@@ -13,8 +12,7 @@ class GymList extends Component {
     }
     render() {
         return (
-            <div>
-              <span className="content-title">Gyms:</span>
+            <RtCard title="Gyms">
               <LoadContainer loaded={ !!this.props.gyms.length }>
                 <div key="0" className="gym-list">
                     <LoadBar/>
@@ -23,7 +21,7 @@ class GymList extends Component {
                   { this.props.gyms.map(gym => (<GymItem key={ gym._id } gym={ gym } className="gym-item" />)) }
                 </div>
               </LoadContainer>
-            </div>
+            </RtCard>
         )
     }
 }

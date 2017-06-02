@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, UncontrolledNavDropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
+import {stateToggle} from 'data/util'
 
 class RtHeader extends Component {
+    state = {
+        isOpen: false
+    }
+
     render() {
         return (
       <Navbar toggleable color="primary" inverse>
-          <LinkContainer to="/add">
+          <LinkContainer to="/">
             <NavbarBrand>
               Routetracker
             </NavbarBrand>
           </LinkContainer>
-          <NavbarToggler />
-          <Collapse isOpen={ true } navbar>
+          <NavbarToggler right onClick={this.toggle}/>
+          <Collapse isOpen={ this.state.isOpen } navbar>
             <Nav navbar>
               <UncontrolledNavDropdown title="Gyms" id="basic-nav-dropdown">
                 <DropdownToggle nav>
@@ -40,14 +44,14 @@ class RtHeader extends Component {
               </NavLink>
             </LinkContainer>
           </Nav>
-          <Nav>
+          <Nav navbar className="ml-auto">
             <LinkContainer to="/logout">
-              <NavLink href="#">
+              <NavLink>
                 Logout
               </NavLink>
             </LinkContainer>
             <LinkContainer to="/account">
-              <NavLink href="#">
+              <NavLink>
                 My Account
               </NavLink>
             </LinkContainer>
@@ -55,6 +59,10 @@ class RtHeader extends Component {
         </Collapse>
       </Navbar>
         )
+    }
+
+    toggle = () => {
+        this.setState(stateToggle('isOpen'))
     }
 }
 

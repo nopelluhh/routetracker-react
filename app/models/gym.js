@@ -13,7 +13,12 @@ const Gym = new Schema({
     walls: {
         rope: [String],
         boulder: [String]
-    }
+    },
+    type: [{
+        type: String,
+        _id: false,
+        enum: ['rope', 'boulder']
+    }]
 })
 
 Gym.pre('save', function(next) {

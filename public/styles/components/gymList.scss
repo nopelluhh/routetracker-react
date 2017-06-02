@@ -9,12 +9,13 @@
 .gym-item {
     position: relative;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-height: 200px;
     margin-bottom: 40px;
     transition: all 0.2s ease-in;
     text-align: center;
     border-radius: 5px;
+    border: 1px solid $gray-lightest;
     flex: 0 0 auto;
     min-width: 100%;
     @media (min-width: 500px) {

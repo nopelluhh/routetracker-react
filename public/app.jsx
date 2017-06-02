@@ -23,8 +23,6 @@ const store = createStore(
     )
 
 if (module.hot) {
-    console.log('app module hot' )
-    // Enable Webpack hot module replacement for reducers
     module.hot.accept('./data/reducers', () => {
         const nextRootReducer = require('./data/reducers/index')
         store.replaceReducer(nextRootReducer)

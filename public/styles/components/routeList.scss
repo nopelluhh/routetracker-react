@@ -32,5 +32,9 @@
 }
 
 .route-row__selected {
-    background-color: #eee;
+    background-color: #fafafa;
+}
+
+.table__routelist > tbody > tr > td {
+    height: 44px;
 }
