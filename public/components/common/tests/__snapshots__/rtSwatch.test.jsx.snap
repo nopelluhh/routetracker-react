@@ -12,6 +12,10 @@ exports[`rtSwatch tests should adjust style based on props 1`] = `
     }
   }
 >
-  black
+  <span
+    className="hidden-sm-down"
+  >
+    black
+  </span>
 </span>
 `;

@@ -47,7 +47,7 @@ User.methods.generateHash = function(password) {
 
 // checking if password is valid
 User.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this._doc.local.pw)
+    return bcrypt.compareSync(password, this._doc.pw)
 }
 
 

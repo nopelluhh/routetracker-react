@@ -66,7 +66,7 @@ class RouteRow extends React.Component {
                                                      </option>)) }
           </select>
         </td>
-        <td className="gym-row__edit">
+        <td className="gym-row__edit hidden-sm-down">
           <FlexRow inline around style={ { width: '80%' } }>
             <Icon onClick={ this.cancelEdit } icon="x" />
             <Icon onClick={ this.toggleEdit } icon="check" />
@@ -98,7 +98,7 @@ class RouteRow extends React.Component {
         <td>
           { this.props.route.setter }
         </td>
-        <td>
+        <td  className='hidden-sm-down'>
           <Icon onClick={ this.toggleEdit } icon="pencil" />
         </td>
         <td className="hidden-sm">

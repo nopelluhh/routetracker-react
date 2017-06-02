@@ -38,3 +38,16 @@
 .table__routelist > tbody > tr > td {
     height: 44px;
 }
+
+.list__swatch {
+    
+    min-width: 30px;
+    display: inline-block;
+    text-align: center;
+    @include media-breakpoint-up(md) {
+        padding: 3px;
+        margin: 0 10px;
+        width: 50%;
+        min-width: 80px;
+    }
+}

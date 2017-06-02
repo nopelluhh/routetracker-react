@@ -9,7 +9,7 @@ class RtBigBar extends Component {
     static propTypes = {
         data: PropTypes.array,
         goal: PropTypes.array,
-        type: PropTypes.string
+        type: PropTypes.number
     }
 
     componentDidMount() {
@@ -82,7 +82,7 @@ class RtBigBar extends Component {
 
         const fontScale = d3.scaleLinear()
             .domain([320, 500]) // expected limits of SVG width
-            .range([30, 15]) // when SVG is 1/2 width, text will be 2/3 size
+            .range([30, 15]) 
             .clamp(true)
 
         const bar = this.chart
@@ -99,7 +99,7 @@ class RtBigBar extends Component {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-                return '<strong>Total:</strong> <span style=\'color:#ff0044\'>' + d.count + '</span>'
+                return '<strong>' + d.grade + ':</strong> <span style=\'color:#ff0044\'>' + d.count + '</span>'
             })
 
         this.chart.call(tip)
@@ -139,13 +139,21 @@ class RtBigBar extends Component {
             .attr('opacity', 1)
 
 
-        window.onresize = resized.bind(this)
+        
 
-        function resized() {
+        const resized = () => {
             var scale = fontScale(this.chart.node().getBoundingClientRect().width)
             var text = d3.selectAll('text')
             text.attr('font-size', scale + 'px')
+            if(scale > 18) {
+                text.attr('opacity', 0)
+            } else {
+                text.attr('opacity', 1)
+            }
         }
+
+        resized()
+        window.onresize = resized.bind(this)
 
     }
 }

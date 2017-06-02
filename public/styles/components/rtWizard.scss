@@ -68,7 +68,8 @@
     text-align: center;
     top: 50%;
     transform: translateY(-50%);
-        user-select: none; 
+    user-select: none; 
+    cursor: pointer;
 }
 
 .list-label {
@@ -79,6 +80,7 @@
 .grid-label {
     font-size: calc(1em + 1vw);
     user-select: none; 
+    cursor: pointer;
 }
 
 .label-svg {
@@ -119,6 +121,7 @@
 
     &__item {
         text-align: left;
+        font-size: calc(1rem + 0.5vw);
     }
 }
 

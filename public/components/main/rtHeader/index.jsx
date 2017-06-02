@@ -3,6 +3,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, UncontrolledNavDropd
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
 import {stateToggle} from 'data/util'
+import {NavLink as NavRouterLink} from 'react-router-dom'
 
 class RtHeader extends Component {
     state = {
@@ -26,11 +27,9 @@ class RtHeader extends Component {
                 </DropdownToggle>
                 <DropdownMenu>
                   { this.props.gyms ? this.props.gyms.map(gym => (
-                      <LinkContainer key={ gym._id } to={ '/gyms/' + gym.url }>
-                        <DropdownItem key={ gym._id }>
+                    <NavRouterLink className='dropdown-item' key={ gym._id } to={ '/gyms/' + gym.url }>
                           { gym.name }
-                        </DropdownItem>
-                      </LinkContainer>
+                      </NavRouterLink>
                     )) : null }
                   <DropdownItem divider/>
                   <DropdownItem>

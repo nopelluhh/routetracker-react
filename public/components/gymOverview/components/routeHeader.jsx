@@ -21,7 +21,7 @@ const RouteHeader = (props) => {
           <th onClick={props.handleSort('color')}>Color {arrow('color')}</th>
           <th onClick={props.handleSort('wall')}>Wall {arrow('wall')}</th>
           <th onClick={props.handleSort('setter')}>Setter {arrow('setter')}</th>
-          <th>Edit</th>
+          <th className='hidden-sm-down'>Edit</th>
           <th>Select {renderIf(props.selected)(<span>/ <a href="#" onClick={props.deleteHandler}>Remove</a></span>)}</th>
         </tr>
       </thead>
