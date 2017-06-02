@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import RouteRow from './routeRow'
 import RouteHeader from './routeHeader'
@@ -7,36 +8,48 @@ import RouteHeader from './routeHeader'
 import pi from 'rtutil'
 
 class RouteList extends Component {
+    static propTypes = {
+        routes: PropTypes.array,
+        team: PropTypes.object,
+        updateRoute: PropTypes.func,
+        removeRoutes: PropTypes.func
+    }
     componentWillMount() {
         this.setState({
-            routes: this.props.routes,
+            routes: sortOn([...this.props.routes], 'set_on'),
             range: []
         })
     }
 
     componentWillReceiveProps(next) {
         if (next.routes) {
+            let routes = sortOn(next.routes, this.state.sort || 'set_on')
             this.setState({
-                routes: next.routes
+                routes: this.state.dir === 'desc' ? routes.reverse() : routes
             })
         }
     }
 
     render() {
         return (
-            <table className='table table-mobile table-fixed'>
-              <RouteHeader handleSort={ this.handleSort } sort={ this.state.sort } dir={ this.state.dir } />
+            <table className='table table-sm table-mobile table-fixed table__routelist'>
+              <RouteHeader
+                           handleSort={ this.handleSort }
+                           sort={ this.state.sort }
+                           dir={ this.state.dir }
+                           deleteHandler={ this.deleteHandler }
+                           selected={ this.state.range.length > 0 } />
               <tbody>
-                { this.state.routes.map((route, ind) => (
-                      <RouteRow
-                                key={ route._id + route.updated_at }
-                                route={ route }
-                                updateRoute={ this.updateRoute }
-                                team={ this.props.team }
-                                selectHandler={ this.selectHandler }
-                                ind={ ind }
-                                selected={ this.state.range.includes(ind) } />
-                  )) }
+                  { this.state.routes.map((route, ind) => (
+                        <RouteRow
+                                  ind={ ind }
+                                  key={ route._id + route.updated_at }
+                                  route={ route }
+                                  selectHandler={ this.selectHandler }
+                                  selected={ this.state.range.includes(ind) }
+                                  team={ this.props.team }
+                                  updateRoute={ this.updateRoute } />
+                    )) }
               </tbody>
             </table>
         )
@@ -47,6 +60,7 @@ class RouteList extends Component {
             e.preventDefault()
 
             let modifier = e.ctrlKey || e.metaKey
+            let shift = e.shiftKey
             let ind = Number(e.target.dataset.index)
             let range
 
@@ -54,12 +68,17 @@ class RouteList extends Component {
                 let l = Math.min(this.lastSelected, ind)
                 let h = Math.max(this.lastSelected, ind)
                 let selected = pi.range(l, h + 1)
-                
                 this.lastSelected = undefined
                 range = this.state.range.concat(selected)
             } else if (modifier && !this.lastSelected) {
                 this.lastSelected = ind
                 range = this.state.range.concat(ind)
+            } else if (shift && this.state.range.length) {
+                let l = Math.min(...this.state.range)
+                let h = Math.max(...this.state.range)
+                let selected = ind <= h ? pi.range(ind, h + 1) : pi.range(l, ind + 1)
+                this.lastSelected = undefined
+                range = this.state.range.concat(selected)
             } else {
                 this.lastSelected = ind
                 range = this.state.range.includes(ind) && this.state.range.length === 1 ? [] : [ind]
@@ -69,6 +88,17 @@ class RouteList extends Component {
                 range
             })
         }
+    }
+
+    deleteHandler = (event) => {
+        event.preventDefault()
+        const inds = [...new Set(this.state.range)]
+        const ids = inds.map(ind => this.state.routes[ind]._id)
+
+        this.props.removeRoutes(ids)
+        this.setState({
+            range: []
+        })
     }
 
     handleSort = (param) => {
@@ -102,12 +132,6 @@ class RouteList extends Component {
     }
 }
 
-RouteList.propTypes = {
-    routes: PropTypes.array,
-    team: PropTypes.object,
-    updateRoute: PropTypes.func
-}
-
 function sortOn(arr, prop) {
     if (prop === 'grade') {
         return arr.sort((a, b) => a[prop] - b[prop])
@@ -116,7 +140,7 @@ function sortOn(arr, prop) {
     if (prop === 'set_on') {
         return arr.sort((a, b) => Date.parse(a.set_on) - Date.parse(b.set_on))
     }
-    arr.sort(
+    return arr.sort(
         function(a, b) {
             if (a[prop] < b[prop]) {
                 return -1

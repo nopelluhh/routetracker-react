@@ -1,45 +1,48 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import RtSwatch from 'components/common/rtSwatch'
+import {FlexRow, RtSwatch} from 'components/common'
 import { connect } from 'react-redux'
 import { postRoute } from 'data/actions/route'
-import { Button, ButtonToolbar } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+
+import {sleep, renderIf} from 'rtutil'
 
 
 class WzPreview extends Component {
+    state = {}
     render() {
         this.transformedRoute = transformRoute(this.props.route)
         if (this.transformedRoute) {
             return (
                 <div>
                     {this.transformedRoute? (
-                  <ul className="wz_list p10">
-                    <li className="wz_list__item">
+                  <ul className="wz-list p10">
+                    <li className="wz-list__item">
                       Type: {this.props.route.type}
                     </li>
-                    <li className="wz_list__item">
+                    <li className="wz-list__item">
                       Color: 
                       <RtSwatch color={ this.props.route.color || false } />
                     </li>
-                    <li className="wz_list__item">
+                    <li className="wz-list__item">
                       Grade: {this.props.route.grade.value}
                     </li>
-                    <li className="wz_list__item">
+                    <li className="wz-list__item">
                       Gym: {this.props.route.gym.name}
                     </li>
-                    <li className="wz_list__item">
+                    <li className="wz-list__item">
                       Wall: {this.props.route.location}
                     </li>
-                    <li className="wz_list__item">
+                    <li className="wz-list__item">
                       Tags: {this.props.route.tags.join(', ')}
                     </li>
 
                   </ul>
                   ) : null}
-                  <div className="text-center">
-                    <Button bsStyle="info" onClick={this.edit}>Edit</Button>
-                    <Button bsStyle="primary" onClick={this.postRoute}>Add Route</Button>
-                  </div>
+                  <FlexRow>
+                    <button className="btn btn-outline-secondary" onClick={this.edit}>Edit</button>
+                    <button className={'btn btn-outline-primary' + renderIf(this.state.pending)(' btn-outline-pending')} onClick={this.postRoute}>Add Route</button>
+                  </FlexRow>
                 </div>
             )
         }
@@ -47,11 +50,14 @@ class WzPreview extends Component {
     }
 
     postRoute = () => {
+        this.setState({pending: true})
         this.props.postRoute(this.transformedRoute)
+            .then(sleep(1000))
             .then(() => {
                 this.props.reset()
                 this.setState({
-                    added: true
+                    added: true,
+                    pending: false
                 })
             })
     }

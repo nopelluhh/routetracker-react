@@ -14,3 +14,52 @@
 .load_container-leave.load_container-leave-active {
   opacity: 0;
 }
+
+.list-enter {
+  opacity: 0;
+  overflow: hidden;
+}
+
+.list-enter.list-enter-active {
+ opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.list-leave {
+ opacity: 1;
+}
+
+.list-leave.list-leave-active {
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 300ms ease-in;
+}
+
+
+@keyframes spin_around { 
+    0%{transform: rotate(0)}
+    100%{transform: rotate(360deg)}
+}
+
+.btn-outline-pending {
+  color: transparent !important;
+  background-color: $brand-primary;
+
+  &::after {
+    animation: 1s linear 0s infinite spin_around;
+    background: transparent;
+    opacity: 100;
+    pointer-events: none;
+    border: 2px solid #dbdbdb;
+    border-radius: 290486px;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 1em;
+    width: 1em; 
+    left: calc(50% - (1em / 2));
+    top: calc(50% - (1em / 2));
+    position: absolute !important;
+  }
+}

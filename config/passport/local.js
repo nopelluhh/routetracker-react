@@ -21,7 +21,7 @@ module.exports = function(passport) {
 
     passport.use('local-login', new LocalStrategy(
         function(username, password, done) {
-            User.findOne({ 'local.email': username }, {'local.pw': 1},function(err, user) {
+            User.findOne({ 'email': username }, {'pw': 1},function(err, user) {
                 if (err) { return done(err) }
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username.' })
@@ -42,7 +42,7 @@ module.exports = function(passport) {
 
     function localRegister(req, email, password, done) {
         process.nextTick(function() {
-            User.findOne({ 'local.email': email }, function(err, user) {
+            User.findOne({ 'email': email }, function(err, user) {
                 if (err) return done(err)
                 if (user) {
                     return done(null, user)

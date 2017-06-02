@@ -1,0 +1,16 @@
+.rt-pane {
+    border: 1px solid $gray-lighter;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+}
+
+.rt-pane__header {
+    font-weight: 100;
+    display: block;
+    color: $gray-dark;
+    font-size: 1.8rem;
+    border-radius: 5px;
+    padding: 0 10px 3px 10px;
+    margin: 0 0 15px 0;
+}

@@ -45,7 +45,8 @@ module.exports = {
         historyApiFallback: true,
         hotOnly: true,
         proxy: {
-            '/api': `http://${host}:8080`
+            '/api': `http://${host}:8080`,
+            '/assets/svg': `http://${host}:8080`
         }
     },
     node: {

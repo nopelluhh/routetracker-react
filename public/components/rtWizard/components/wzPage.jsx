@@ -9,11 +9,11 @@ class WzPage extends Component {
     }
     render() {
         return (
-            <div className="row p10b hidden-xs">
-              <div className="col-xs-6">
+            <div className="row p10b hidden-xs justify-content-between">
+              <div className="col-xs-2">
                 <button className="btn btn-link" onClick={this.prev}>Previous</button>
               </div>
-              <div className="col-xs-6 text-right">
+              <div className="col-xs-2">
                 <button className="btn btn-link" onClick={this.next }>Next</button>
               </div>
             </div>

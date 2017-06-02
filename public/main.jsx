@@ -4,10 +4,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './app'
 import { AppContainer } from 'react-hot-loader'
-
+import SvgInjector from 'svg-injector'
 
 const render = Component => {
-    console.log('rendered')
     ReactDOM.render(
     <AppContainer>
 		<Component />
@@ -17,6 +16,11 @@ const render = Component => {
 }
 
 render(App)
+
+document.addEventListener('DOMContentLoaded', function() {
+    let icons = document.querySelectorAll('.iconic-sprite')
+    SvgInjector(icons)
+})
 
 if (module.hot) {
     console.log('so so hot')

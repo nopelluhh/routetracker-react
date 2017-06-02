@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PT from 'prop-types'
-import InputBox from 'components/common/inputBox'
-import FlexRow from 'components/common/flexRow'
+import { InputBox, FlexRow, LoadBar } from 'components/common'
 
 import { renderIf } from 'rtutil'
 
@@ -43,34 +42,34 @@ class RtForm extends Component {
 
     render() {
         return (
-            <form className="form-horizontal" style={{opacity: this.props.pending? 0.5 : 1, transition: 'opacity 0.3s linear'}}>
+            <form className="form-horizontal" style={ { opacity: this.props.pending ? 0.5 : 1, transition: 'opacity 0.3s linear', position: 'relative' } }>
               <div className="form-group">
                 <FlexRow inline>
                   { renderIf(this.props.editable && !this.state.edit)(
-                        <button className="btn btn-default" onClick={ this.toggleEdit }>
+                        <button className="btn btn-outline-primary" onClick={ this.toggleEdit }>
                           Edit
                         </button>
                     ) }
                   { renderIf(this.props.editable && this.state.edit)(
-                        <button className="btn btn-default" onClick={ this.toggleEdit }>
+                        <button className="btn btn-outline-secondary" onClick={ this.toggleEdit }>
                           Cancel
                         </button>
                     ) }
                   { renderIf(this.state.edit)(
-                        <button className="btn btn-default" onClick={ this.save }>
+                        <button className={'btn btn-outline-primary' + renderIf(this.props.pending)(' btn-outline-pending')} onClick={ this.save }>
                           Save
                         </button>
                     ) }
                 </FlexRow>
               </div>
-              { this.makeForm(this.props.fields, this.state.data, this.state.edit) }
-            </form>
+              { this.makeForm() }
+              </form>
         )
     }
 
     toggleEdit = (e) => {
         e.preventDefault()
-        const data = Object.assign({}, this.state.edit? this.props.values : this.state.data)
+        const data = Object.assign({}, this.state.edit ? this.props.values : this.state.data)
         this.setState({
             edit: !this.state.edit,
             data
@@ -95,13 +94,14 @@ class RtForm extends Component {
         }
     }
 
-    makeForm(fields, values, edit) {
+    makeForm = (fields) => {
+        fields = fields || this.props.fields
         return fields.map((field, i) => {
             if (field instanceof Array) {
                 return (<div key={ i } style={ { padding: '30px 0 0' } }>
                           <h5>{ field[0] }</h5>
                           <div>
-                            { this.makeForm(field.slice(1), values, edit) }
+                            { this.makeForm(field.slice(1), this.state.data, this.state.edit) }
                           </div>
                         </div>)
             } else {
@@ -109,8 +109,8 @@ class RtForm extends Component {
                     <InputBox
                               key={ field.name }
                               field={ field }
-                              values={ values }
-                              edit={ edit }
+                              values={ this.state.data }
+                              edit={ this.state.edit }
                               updateForm={ this.updateForm } />
                 )
             }
@@ -119,7 +119,9 @@ class RtForm extends Component {
 
     updateForm = (update) => {
         this.setState({
-            data: Object.assign(this.state.data, {[update.field.name]: update.value})
+            data: Object.assign(this.state.data, {
+                [update.field.name]: update.value
+            })
         })
     }
 }

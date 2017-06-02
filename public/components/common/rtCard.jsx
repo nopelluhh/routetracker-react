@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 
 
 const RtCard = (props) => (
-    <div>
-      <div className="bs-1 rt_card__header text-capitalize">
-        {props.title}
-      </div>
-      <div className="rt_card__content">
-        { props.children }
-      </div>
+  <div className="rt-card__content">
+    <div className="rt-card__header text-capitalize">
+      { props.title }
     </div>
+    { props.children }
+  </div>
 )
 
 export default RtCard

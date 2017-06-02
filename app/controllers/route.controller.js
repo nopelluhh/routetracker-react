@@ -15,9 +15,8 @@ function routeController() {
     }
 
     function byGym(req, res) {
-        let gym = req.query.gym
-        let type = req.params.type
-        routeService.getMany({gym, type})
+        let gym = req.params.id
+        routeService.getMany({gym})
             .then(routes => res.json(routes))
             .catch(err => res.json(err))
     }

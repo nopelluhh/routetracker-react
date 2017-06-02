@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`statsCard tests should adjust style based on props 1`] = `
+<div
+  className="rt-pane "
+>
+  <span
+    className="rt-pane__header"
+  >
+    Overview
+  </span>
+  <table
+    className="table"
+  >
+    <tbody>
+      <tr>
+        <td
+          className="text-right"
+        >
+          Count:
+        </td>
+        <td
+          className="text-left"
+        >
+          1
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="text-right"
+        >
+          Routes Needed:
+        </td>
+        <td
+          className="text-left"
+        >
+          N/A
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="text-right"
+        >
+          Oldest Route:
+        </td>
+        <td
+          className="text-left"
+        >
+          Invalid Date
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

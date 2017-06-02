@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {renderIf} from 'rtutil'
 
 const arrows = { 
     'asc': '\u25B2',
@@ -18,9 +19,10 @@ const RouteHeader = (props) => {
           <th onClick={props.handleSort('set_on')}>Date {arrow('set_on')}</th>
           <th onClick={props.handleSort('grade')}>Grade {arrow('grade')}</th>
           <th onClick={props.handleSort('color')}>Color {arrow('color')}</th>
+          <th onClick={props.handleSort('wall')}>Wall {arrow('wall')}</th>
           <th onClick={props.handleSort('setter')}>Setter {arrow('setter')}</th>
           <th>Edit</th>
-          <th>Select</th>
+          <th>Select {renderIf(props.selected)(<span>/ <a href="#" onClick={props.deleteHandler}>Remove</a></span>)}</th>
         </tr>
       </thead>
     )

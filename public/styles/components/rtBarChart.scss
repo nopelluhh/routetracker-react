@@ -10,19 +10,20 @@
     padding: 12px;
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
-    border-radius: $border-radius-base
+    border-radius: $border-radius
 }
 
 .rt-marker {
-    font-family: 'Dosis';
     pointer-events: none;
     user-select: none; 
-    fill: white;
+    fill: $gray-light;
 }
 
 .chart {
     width: 100%;
     max-height: 40vh;
-    background-color: $gray-dark;
+    background-color: #ffffff;
+    border: 1px solid $gray-lighter;
     border-radius: 5px;
+    margin-bottom: -5px;
 }

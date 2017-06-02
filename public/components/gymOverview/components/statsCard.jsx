@@ -1,30 +1,56 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import RtCard from 'components/common/rtCard'
+import { RtPane } from 'components/common'
 
 class StatsCard extends Component {
     componentDidMount() {
-        this.setState({data: this.makeOverview(this.props.data)})
+        this.setState({
+            data: this.makeOverview(this.props.data)
+        })
     }
     render() {
-        if(!this.state) return null
+        if (!this.state) return null
         return (
-            <RtCard title="Hey!">
-                <ul className="list-unstyled">
-                    <li>Count: {this.state.data.count}</li>
-                    <li>Routes Needed: N/A</li>
-                    <li>Oldest Route: {this.state.data.oldest}</li>
-                </ul>
-            </RtCard>
+            <RtPane>
+              <span className="rt-pane__header">Overview</span>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td className="text-right">
+                      Count:
+                    </td>
+                    <td className="text-left">
+                      { this.state.data.count }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-right">
+                      Routes Needed:
+                    </td>
+                    <td className="text-left">
+                      N/A
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="text-right">
+                      Oldest Route:
+                    </td>
+                    <td className="text-left">
+                      { this.state.data.oldest }
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </RtPane>
         )
     }
 
     makeOverview(data) {
-
         let min = Infinity
 
         data.forEach(route => {
-            if(min > Date.parse(route.created_at)) min = route.created_at
+            if (min > Date.parse(route.set_on))
+                min = route.set_on
         })
         return {
             count: data.length,

@@ -3,7 +3,7 @@ import React from 'react'
 const styles = (props) => {
     return {
         display: props.inline? 'inline-flex' : 'flex',
-        justifyContent: 'space-between',
+        justifyContent: props.around? 'space-around' : 'space-between',
         margin: 'auto',
         ...props.style
     }

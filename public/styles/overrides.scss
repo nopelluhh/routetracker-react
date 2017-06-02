@@ -6,3 +6,30 @@
 input:focus {
     outline: none
 }
+
+.table th {
+    border-top: none;
+}
+
+.form-control-static {
+    padding-top: 0;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0;
+    line-height: 2.5;
+    border: solid transparent;
+    border-width: 1px 0;
+}
+
+.tab-pane {
+    margin-top: 10px;
+}
+
+
+.navbar-brand {
+    font-family: 'Dosis';
+    font-size: 2.6em;
+    font-weight: 100;
+    &:hover {
+        color: $brand-primary;
+    }
+}

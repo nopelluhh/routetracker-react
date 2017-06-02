@@ -33,12 +33,12 @@ class Account extends Component {
         return (
             <LoadContainer loaded={ this.state.loaded }>
               <LoadBar/>
-              <RtCard title="Your Account">
+              <RtCard title="My Account">
                 <Tabs id="account-tabs" animation={false} className="nav-justified">
-                  <Tab title="Basic Info" eventKey={1}>
+                  <Tab title="Basic Info" eventKey={1} tabClassName="nav-link">
                     <BasicInfo user={this.props.user}/>
                   </Tab>
-                  <Tab title="Team Info" eventKey={2}>
+                  <Tab title="Team Info" eventKey={2} tabClassName="nav-link">
                       <TeamInfo/>
                   </Tab>
                 </Tabs>

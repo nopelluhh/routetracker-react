@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SortableList tests should render a list 1`] = `
+<div>
+  <ul
+    className={undefined}
+    style={
+      Object {
+        "fontSize": "1.5em",
+      }
+    }
+  >
+    <div>
+      Noah
+    </div>
+    <div>
+      Greg
+    </div>
+  </ul>
+</div>
+`;
+
+exports[`SortableList tests should render options when provided 1`] = `
+<div>
+  <ul
+    className={undefined}
+    style={
+      Object {
+        "fontSize": "1.5em",
+      }
+    }
+  >
+    <div>
+      Noah
+    </div>
+    <div>
+      Greg
+    </div>
+  </ul>
+  <ul
+    className={undefined}
+    style={
+      Object {
+        "fontSize": "1.5em",
+      }
+    }
+  >
+    <div>
+      Noah
+    </div>
+    <div>
+      Greg
+    </div>
+    <div>
+      Paul
+    </div>
+    <div>
+      Smith
+    </div>
+    <div>
+      Jeeves
+    </div>
+  </ul>
+</div>
+`;
