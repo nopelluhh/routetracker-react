@@ -7,8 +7,7 @@ module.exports = function(passport) {
     passport.serializeUser((user, done) => {
         var sessionUser = {
             _id: user._id,
-            username: user.local.username,
-            email: user.local.email,
+            email: user.email,
             roles: user.roles,
             gyms: user.gyms
         }
@@ -21,7 +20,7 @@ module.exports = function(passport) {
 
     passport.use('local-login', new LocalStrategy(
         function(username, password, done) {
-            User.findOne({ 'email': username }, {'pw': 1},function(err, user) {
+            User.findOne({ 'email': username },function(err, user) {
                 if (err) { return done(err) }
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username.' })
@@ -36,7 +35,7 @@ module.exports = function(passport) {
 
     passport.use('local-signup', new LocalStrategy({
         usernameField: 'email',
-        passwordField: 'password',
+        passwordField: 'pw',
         passReqToCallback: true
     }, localRegister))
 
@@ -48,8 +47,8 @@ module.exports = function(passport) {
                     return done(null, user)
                 } else {
                     var newUser = new User()
-                    newUser.local.email = email
-                    newUser.local.pw = newUser.generateHash(password)
+                    newUser.email = email
+                    newUser.pw = newUser.generateHash(password)
                     newUser.save(function(err) {
                         if (err) throw err
                         return done(null, newUser)
@@ -67,6 +66,8 @@ module.exports = function(passport) {
             successRedirect: '/gyms',
             //failureRedirect: '/',
         }))
+
+    router.get('/api/users/all', (req, res) => User.find({}).then(users => res.json(users)))
 
     router.post('/api/register', passport.authenticate('local-signup'), (req, res) => res.send('a-ok!'))
 
