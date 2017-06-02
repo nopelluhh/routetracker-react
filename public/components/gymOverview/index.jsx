@@ -69,9 +69,10 @@ class GymOverview extends Component {
     render() {
         if (this.state.error) return <Redirect to='/' />
         return (
+              <RtCard title={ this.props.gym && this.props.gym.name || '' } key={ this.props.gym && this.props.gym.name } style={{minHeight: 'calc(100vh - 100px)'}}>
             <LoadContainer loaded={ this.state.loaded }>
               <LoadBar/>
-              <RtCard title={ this.props.gym && this.props.gym.name || '' } key={ this.props.gym && this.props.gym.name }>
+              <section>
                 <div className="row align-items-stretch">
                   <div className="col-12">
                     <TabSwitcher tabs={ this.props.gym && this.props.gym.type } toggle={ this.toggle } active={ this.state.active } />
@@ -103,8 +104,9 @@ class GymOverview extends Component {
                     </ReactCSSTransitionReplace>
                   </div>
                 </div>
-              </RtCard>
+                </section>
             </LoadContainer>
+              </RtCard>
 
         )
     }

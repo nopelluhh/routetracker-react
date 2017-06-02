@@ -17,7 +17,7 @@ class Main extends Component {
     render() {
         return (
               <div>
-                <RtHeader/>
+                <RtHeader location={this.props.location}/>
                 {/*<RtSidebar/>*/}
                 <RtContent/>
               </div>

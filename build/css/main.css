@@ -6921,6 +6921,17 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .table__routelist > tbody > tr > td {
   height: 44px; }
 
+.list__swatch {
+  min-width: 30px;
+  display: inline-block;
+  text-align: center; }
+  @media (min-width: 768px) {
+    .list__swatch {
+      padding: 3px;
+      margin: 0 10px;
+      width: 50%;
+      min-width: 80px; } }
+
 .rt-bar:hover {
   opacity: 0.9; }
 
@@ -6994,16 +7005,6 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .rt-content:after {
   clear: both; }
-
-.list__swatch {
-  width: 50%;
-  min-width: 80px;
-  display: inline-block;
-  text-align: center; }
-  @media (min-width: 400px) {
-    .list__swatch {
-      padding: 3px;
-      margin: 0 10px; } }
 
 .rt-pane {
   border: 1px solid #eceeef;
@@ -7109,7 +7110,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   text-align: center;
   top: 50%;
   transform: translateY(-50%);
-  user-select: none; }
+  user-select: none;
+  cursor: pointer; }
 
 .list-label {
   font-size: 1rem;
@@ -7117,7 +7119,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .grid-label {
   font-size: calc(1em + 1vw);
-  user-select: none; }
+  user-select: none;
+  cursor: pointer; }
 
 .label-svg {
   max-height: 3em;
@@ -7151,7 +7154,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   font-size: 1.5rem;
   min-height: 330px; }
   .wz-list__item {
-    text-align: left; }
+    text-align: left;
+    font-size: calc(1rem + 0.5vw); }
 
 .p5 {
   padding: 5px; }

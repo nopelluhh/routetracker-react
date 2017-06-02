@@ -3,37 +3,22 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-node')
 
 const User = new Schema({
-    username: {
+    email: {
         type: String,
         require: true
     },
     teams: [{
         type: Schema.Types.ObjectId,
-        ref: 'team'        
+        ref: 'team'
     }],
     roles: [{
         type: String,
         enum: ['setter', 'head', 'admin']
     }],
     nickname: String,
-    local: {
-        fname: {
-            type: String,
-            require: true
-        },
-        lname: {
-            type: String,
-            require: true
-        },
-        email: {
-            type: String,
-            require: true
-        },
-        pw: {
-            type: String,
-            select: false,
-            require: true
-        }
+    pw: {
+        type: String,
+        require: true
     }
 }, {
     timestamps: {
@@ -47,7 +32,7 @@ User.methods.generateHash = function(password) {
 
 // checking if password is valid
 User.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this._doc.local.pw)
+    return bcrypt.compareSync(password, this.pw)
 }
 
 

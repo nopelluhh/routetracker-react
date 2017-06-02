@@ -13,14 +13,18 @@ class RtSwatch extends Component {
                 value: this.props.color.toLowerCase()
             }
         }
-        const style = {
+        const localStyle = {
             backgroundColor: c.color || 'white',
             color: color.textColor(c.color),
             borderRadius: '3px',
             height: '30px'
         }
 
-        return (<span className={this.props.className} style={ style }>{ c.value || '' }</span>)
+        const style = Object.assign({}, localStyle, this.props.style? this.props.style : {})
+
+        
+
+        return (<span className={this.props.className} style={ style }><span className="hidden-sm-down">{ c.value || '' }</span></span>)
     }
 
 }

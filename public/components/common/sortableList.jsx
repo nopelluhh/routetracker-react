@@ -37,8 +37,8 @@ class SortableList extends Component {
         this.setState({
             current: nextProps.list
         })
-        if (nextProps.options && this.state.current || nextProps.children) {
-            const options = R.differenceWith(this.comparator, nextProps.options, nextProps.children)
+        if (nextProps.options && this.state.current || nextProps.list) {
+            const options = R.differenceWith(this.comparator, nextProps.options, nextProps.list)
             this.setState({
                 options
             })
@@ -48,15 +48,19 @@ class SortableList extends Component {
     render() {
         if (!this.state.current) return null
         return (
-            <div>
+            <div className='row'>
+                <div className="col">
               <ul className={ this.props.className } style={ { fontSize: '1.5em' } }>
                 { this.state.current.map((item, ind, arr) => <this.ListItem data-source="list" key={ item.key || ind } {...item} {...this.makeOptions(ind, arr, 'list')}/>) }
               </ul>
+              </div>
               { this.state.options? (
+                  <div className="col">
                     <ul className={ this.props.className } style={ { fontSize: '1.5em' } }>
                       { this.state.options.map((item, ind, arr) => <this.ListItem data-source="options" key={ item.key || ind } {...item} {...this.makeOptions(ind, arr, 'options')}/>
                         ) }
-                    </ul>) : null}
+                    </ul>
+                    </div>) : null}
             </div>
         )
     }
@@ -76,16 +80,25 @@ class SortableList extends Component {
                 let source = e.dataTransfer.getData('source')
                 let dest = e.currentTarget.dataset.source
 
-                let oldInd = +e.dataTransfer.getData('ind')
+                if(source === dest) return 
 
+                let oldInd = +e.dataTransfer.getData('ind')
                 let newInd = ind
+
+                let lists = {
+                    list: [...this.state.current],
+                    options: [...this.state.options]
+                }
+
                 if (newInd == arr.length - 1) {
                     newInd = arr.length
                 }
-                let newEl = arr.splice(oldInd, 1)[0]
-                arr.splice(newInd, 0, newEl)
+                let newEl = lists[source].splice(oldInd, 1)[0]
+                lists[dest].splice(newInd, 0, newEl)
+
                 this.setState({
-                    current: arr
+                    current: lists.list,
+                    options: lists.options
                 })
             }
         }
