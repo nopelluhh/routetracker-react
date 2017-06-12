@@ -18,7 +18,11 @@ const Gym = new Schema({
         type: String,
         _id: false,
         enum: ['rope', 'boulder']
-    }]
+    }],
+    color: {
+        type: String,
+        required: true
+    }
 })
 
 Gym.pre('save', function(next) {

@@ -9,3 +9,14 @@ export const colors = [
     { '_id': 'white', 'value': 'white', 'color': '#fff' },
     { '_id': 'pink', 'value': 'pink', 'color': '#e5d' }
 ]
+
+
+export const palatte = {
+    teal: {primary: '#08e0c5', secondary: '#4bd0dd'},
+    pink: {primary: '#fa4978', secondary: '#eb67a8'},
+    orange: {primary: '#fb9500', secondary: '#fbc100'},
+    green: {primary: '#83bf00', secondary: '#83bf00'},
+    yellow: {primary: '#ffdc00', secondary: '#fff400'},
+    blue: {primary: '#008FFF', secondary: '#2577E8'},
+    red: {primary: '#EC3535', secondary: '#E31828'}
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import R from 'ramda'
+import { Row, Col } from 'reactstrap'
 import { renderIf } from 'rtutil'
 
 
@@ -48,20 +49,28 @@ class SortableList extends Component {
     render() {
         if (!this.state.current) return null
         return (
-            <div className='row'>
-                <div className="col">
+            <Row>
+              <Col>
               <ul className={ this.props.className } style={ { fontSize: '1.5em' } }>
-                { this.state.current.map((item, ind, arr) => <this.ListItem data-source="list" key={ item.key || ind } {...item} {...this.makeOptions(ind, arr, 'list')}/>) }
+                { this.state.current.map((item, ind, arr) => <this.ListItem
+                                                                            data-source="list"
+                                                                            key={ item.key || ind }
+                                                                            {...item}
+                                                                            {...this.makeOptions(ind, arr, 'list')}/>) }
               </ul>
-              </div>
-              { this.state.options? (
-                  <div className="col">
-                    <ul className={ this.props.className } style={ { fontSize: '1.5em' } }>
-                      { this.state.options.map((item, ind, arr) => <this.ListItem data-source="options" key={ item.key || ind } {...item} {...this.makeOptions(ind, arr, 'options')}/>
-                        ) }
-                    </ul>
-                    </div>) : null}
-            </div>
+              </Col>
+              { this.state.options ? (
+                <Col>
+                <ul className={ this.props.className } style={ { fontSize: '1.5em' } }>
+                  { this.state.options.map((item, ind, arr) => <this.ListItem
+                                                                              data-source="options"
+                                                                              key={ item.key || ind }
+                                                                              {...item}
+                                                                              {...this.makeOptions(ind, arr, 'options')}/>
+                    ) }
+                </ul>
+                </Col>) : null }
+            </Row>
         )
     }
 
@@ -80,7 +89,7 @@ class SortableList extends Component {
                 let source = e.dataTransfer.getData('source')
                 let dest = e.currentTarget.dataset.source
 
-                if(source === dest) return 
+                if (source === dest) return
 
                 let oldInd = +e.dataTransfer.getData('ind')
                 let newInd = ind
@@ -103,10 +112,6 @@ class SortableList extends Component {
             }
         }
     }
-}
-
-function comparator(a, b) {
-    return a.key === b.key
 }
 
 export default SortableList

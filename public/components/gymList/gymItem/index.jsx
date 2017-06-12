@@ -29,7 +29,7 @@ class GymItem extends Component {
                 </div>
                 <div className="gym-preview">
                   { this.props.data
-                    ? <RtBar data={ this.props.data }/>
+                    ? <RtBar data={ this.props.data } color={this.props.gym.color}/>
                     : null }
                 </div>
               </div>

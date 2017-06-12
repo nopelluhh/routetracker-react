@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as d3 from 'd3'
+import {palatte} from 'rtconfig'
 
 class RtBar extends Component {
     componentDidMount() {
@@ -31,9 +32,15 @@ function makeChart() {
         ])
         .range([0, height])
 
-    const rainbow = d3
-        .scaleSequential(d3.interpolateRainbow)
-        .domain([0, data.length])
+    const color = palatte[this.props.color] || {primary: 'black', secondary: 'black'}
+
+
+    const colorScale = this.props.color ?
+        d3.scaleLinear(d3.interpolateHcl)
+            .domain([0, data.length])
+            .range([color.primary, color.secondary]) :
+        d3.scaleSequential(d3.interpolateRainbow)
+            .domain([0, data.length])
 
     const chart = d3
         .select(this.el)
@@ -55,13 +62,15 @@ function makeChart() {
         .append('rect')
         .classed('rt-bar', true)
         .attr('width', barWidth - 1)
+        .attr('rx', 1)
+        .attr('ry', 1)
         .attr('height', 0)
         .attr('opacity', (d) => +d
             ? 1
             : 0.4)
         .attr('y', height)
         .attr('fill', function(d, i) {
-            return rainbow(i)
+            return colorScale(i)
         })
         .transition()
         .delay(() => 400 - Math.random() * 100)

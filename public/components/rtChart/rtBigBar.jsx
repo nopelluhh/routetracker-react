@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 
 import * as d3 from 'd3'
 import d3tip from 'd3-tip'
+import {palatte} from 'rtconfig'
 d3.tip = d3tip
 
 class RtBigBar extends Component {
     static propTypes = {
         data: PropTypes.array,
         goal: PropTypes.array,
-        type: PropTypes.number
+        type: PropTypes.string,
+        color: PropTypes.string
     }
 
     componentDidMount() {
@@ -18,19 +20,27 @@ class RtBigBar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.type !== this.props.type) {
+        if (nextProps.type !== this.props.type) {
             this.chart.selectAll('*').remove()
             this.makeChart(nextProps.data)
-        } else if (nextProps.data) {
+        }
+        if (nextProps.data) {
             this.updateChart(nextProps.data)
+        }
+        if (nextProps.color) {
+            return
         }
     }
 
     render() {
         return (
             <div>
-                <svg viewBox="-5 -5 500 300" preserveAspectRatio="xMidYMin meet" className="w100 chart" ref={ (el) => this.el = el }>
-                </svg>
+              <svg
+                   viewBox="-5 -5 500 300"
+                   preserveAspectRatio="xMidYMin meet"
+                   className="w100 chart"
+                   ref={ (el) => this.el = el }>
+              </svg>
             </div>
         )
     }
@@ -38,6 +48,7 @@ class RtBigBar extends Component {
     updateChart = (data) => {
         var svg = d3.select(this.el)
 
+        // calculate new height
         this.y = d3
             .scaleLinear()
             .domain([
@@ -45,15 +56,15 @@ class RtBigBar extends Component {
             ])
             .range([0, this.height])
 
-    // Make the changes
+        // Make the changes
         svg.selectAll('.rt-bar')
             .data(data)
-            .transition()   // change the line
+            .transition() // change the line
             .duration(750)
             .attr('y', (d) => {
                 return this.height - this.y(d.count)
             })
-            .attr('height', (d) => this.y(d.count) + 3)
+            .attr('height', (d) => this.y(d.count) + 6)
 
         svg.selectAll('.rt-marker')
             .data(data)
@@ -67,7 +78,20 @@ class RtBigBar extends Component {
 
         this.width = 490
         this.height = 285
+
+        const color = palatte[this.props.color] || {primary: 'black', secondary: 'black'}
+
+
+        const colorScale = this.props.color ?
+        d3.scaleLinear(d3.interpolateHcl)
+            .domain([0, data.length])
+            .range([color.primary, color.secondary]) :
+            d3.scaleSequential(d3.interpolateRainbow)
+                .domain([0, data.length])
+
+
         const barWidth = this.width / data.length
+
 
         this.y = d3
             .scaleLinear()
@@ -76,13 +100,9 @@ class RtBigBar extends Component {
             ])
             .range([0, this.height])
 
-        const rainbow = d3
-            .scaleSequential(d3.interpolateRainbow)
-            .domain([0, data.length])
-
         const fontScale = d3.scaleLinear()
             .domain([320, 500]) // expected limits of SVG width
-            .range([30, 15]) 
+            .range([30, 15])
             .clamp(true)
 
         const bar = this.chart
@@ -109,11 +129,11 @@ class RtBigBar extends Component {
             .attr('width', barWidth - 5)
             .attr('rx', 3)
             .attr('ry', 3)
-            .attr('height', 0)
+            .attr('height', 6)
             .attr('opacity', (d) => +d.count ? 1 : 0.4)
-            .attr('y', this.height + 6)
+            .attr('y', this.height)
             .attr('fill', function(d, i) {
-                return rainbow(i)
+                return colorScale(i)
             })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
@@ -128,9 +148,9 @@ class RtBigBar extends Component {
 
         bar.append('text')
             .classed('rt-marker', true)
-            .attr('y', this.height - 7)
-            .attr('x', barWidth / 2 - 4)
-            .attr('text-anchor', 'middle')
+            .attr('y', barWidth / 2 + 3)
+            .attr('x', -280)
+            .attr('text-anchor', 'start')
             .text(d => d.grade)
             .attr('font-size', '14px')
             .attr('opacity', 0)
@@ -139,13 +159,13 @@ class RtBigBar extends Component {
             .attr('opacity', 1)
 
 
-        
+
 
         const resized = () => {
             var scale = fontScale(this.chart.node().getBoundingClientRect().width)
             var text = d3.selectAll('text')
             text.attr('font-size', scale + 'px')
-            if(scale > 18) {
+            if (scale > 18) {
                 text.attr('opacity', 0)
             } else {
                 text.attr('opacity', 1)

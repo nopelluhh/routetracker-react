@@ -71,7 +71,7 @@ module.exports = function(passport) {
 
     router.post('/api/register', passport.authenticate('local-signup'), (req, res) => res.send('a-ok!'))
 
-    router.get('/api/logout', (req, res) => res.send('logout!'))
+    router.get('/api/logout', (req, res) => {req.logOut(); res.send('logout!')})
 
 
     return router

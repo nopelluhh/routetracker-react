@@ -9,7 +9,7 @@
             "attrsOnSameLineAsTag": false,
             "maxAttrsOnTag": 3,
             "firstAttributeOnSameLine": false,
-            "spaceInJSXExpressionContainers": " ",
+            "spaceInJSXExpressionContainers": "",
             "alignWithFirstAttribute": true,
             "htmlOptions": { // same as the ones passed to js-beautifier.html 
                 "brace_style": "collapse",

@@ -10,6 +10,7 @@ import SwipeContainer from './swipeContainer'
 import Icon from './icon'
 import RtPane from './rtPane'
 import SortableList from './sortableList'
+import TabSwitcher from './tabSwitcher'
 
 export {
     // UI 
@@ -19,6 +20,7 @@ export {
     RtList,
     Icon,
     SortableList,
+    TabSwitcher,
 
     // LAYOUT
     FlexRow,

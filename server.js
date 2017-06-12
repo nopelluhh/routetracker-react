@@ -45,7 +45,7 @@ app.use(passportConfig(passport))
 app.get('/', (req, res, next) => {
     console.log(req.user)
     if (!req.user) {
-        res.sendFile(path.resolve(__dirname, './login/login.html'))
+        res.sendFile(path.resolve(__dirname, './build/login/index.html'))
     } else {
         next()
     }

@@ -6,9 +6,7 @@
 @import './_typography.scss';
 @import './animations.scss';
 
-.font-alt {
-    font-family: 'Dosis';
-}
+
 
 
 
@@ -22,4 +20,17 @@
     border-radius: 5px;
     padding: 0 10px 3px 10px;
     margin: 0 0 15px 0;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
 }

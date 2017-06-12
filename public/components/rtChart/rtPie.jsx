@@ -48,7 +48,11 @@ function makeChart() {
 
     var path = d3.arc()
     .outerRadius(radius - 10)
-    .innerRadius(0)
+    .innerRadius(30)
+
+    var hoverPath = d3.arc()
+    .outerRadius(radius - 8)
+    .innerRadius(30)
 
     var label = d3.arc()
     .outerRadius(radius - 40)
@@ -63,6 +67,14 @@ function makeChart() {
     arc.append('path')
     .attr('d', path)
     .attr('fill', d => rainbow(d.data))
+    .on('mouseover', function(d, i) {
+        d3.select(this)
+            .attr('d', hoverPath)
+    })
+    .on('mouseout', function() {
+        d3.select(this)
+            .attr('d', path)
+    })
 
     arc.append('text')
     .attr('transform', function(d) {
