@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const styles = (props) => {
     return {
@@ -14,5 +15,9 @@ const flexRow = (props) => (
       { props.children }
     </div>
 )
+
+flexRow.propTypes = {
+    children: PropTypes.node
+}
 
 export default flexRow

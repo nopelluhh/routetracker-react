@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, UncontrolledNavDropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap'
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavDropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux'
 import {stateToggle} from 'data/util'
@@ -7,7 +7,8 @@ import {NavLink as NavRouterLink} from 'react-router-dom'
 
 class RtHeader extends Component {
     state = {
-        isOpen: false
+        isOpen: false,
+        dropdownIsOpen: false
     }
 
     render() {
@@ -21,11 +22,11 @@ class RtHeader extends Component {
           <NavbarToggler right onClick={this.toggle}/>
           <Collapse isOpen={ this.state.isOpen } navbar>
             <Nav navbar>
-              <UncontrolledNavDropdown title="Gyms" id="basic-nav-dropdown">
+              <NavDropdown title="Gyms" id="basic-nav-dropdown" toggle={this.toggleDropdown} isOpen={this.state.dropdownIsOpen}>
                 <DropdownToggle nav>
                   Gyms
                 </DropdownToggle>
-                <DropdownMenu>
+                <DropdownMenu onClick={this.toggleDropdown}>
                   { this.props.gyms ? this.props.gyms.map(gym => (
                     <NavRouterLink className='dropdown-item' key={ gym._id } to={ '/gyms/' + gym.url }>
                           { gym.name }
@@ -36,7 +37,7 @@ class RtHeader extends Component {
                     Separated link
                 </DropdownItem>
               </DropdownMenu>
-            </UncontrolledNavDropdown>
+            </NavDropdown>
             <LinkContainer to="/add">
               <NavLink>
                 Add
@@ -62,6 +63,10 @@ class RtHeader extends Component {
 
     toggle = () => {
         this.setState(stateToggle('isOpen'))
+    }
+
+    toggleDropdown = () => {
+        this.setState(stateToggle('dropdownIsOpen'))
     }
 }
 

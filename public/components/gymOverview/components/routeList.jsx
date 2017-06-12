@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import RouteRow from './routeRow'
 import RouteHeader from './routeHeader'
@@ -11,6 +10,7 @@ class RouteList extends Component {
     static propTypes = {
         routes: PropTypes.array,
         team: PropTypes.object,
+        gym: PropTypes.object,
         updateRoute: PropTypes.func,
         removeRoutes: PropTypes.func
     }
@@ -48,7 +48,8 @@ class RouteList extends Component {
                                   selectHandler={ this.selectHandler }
                                   selected={ this.state.range.includes(ind) }
                                   team={ this.props.team }
-                                  updateRoute={ this.updateRoute } />
+                                  updateRoute={ this.updateRoute }
+                                  walls={this.props.walls} />
                     )) }
               </tbody>
             </table>

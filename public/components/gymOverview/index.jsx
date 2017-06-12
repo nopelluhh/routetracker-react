@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 
 import { Redirect } from 'react-router'
 import RtBigBar from 'components/rtChart/rtBigBar'
-import { LoadContainer, LoadBar, RtCard, RtPane } from 'components/common'
+import { LoadContainer, LoadBar, RtCard, TabSwitcher } from 'components/common'
 import StatsCard from './components/statsCard'
 import RouteList from './components/routeList'
-import TabSwitcher from './components/tabSwitcher'
 import ReactCSSTransitionReplace from 'react-css-transition-replace'
+import {Row, Col} from 'reactstrap'
 
 import { getTeam } from 'data/actions/team'
 import { getRoutesByGym, putRoute, removeRoutes } from 'data/actions/route'
@@ -19,7 +19,7 @@ import pi from 'rtutil'
 class GymOverview extends Component {
     state = {
         loaded: false,
-        active: 0
+        active: 'rope'
     }
 
     defaultProps = {
@@ -48,16 +48,15 @@ class GymOverview extends Component {
             setTimeout(() => this.getDataForGym(nextProps.gym.url), 300)
         }
 
-        if (nextProps.routes) {
+        if (nextProps.routes && this.props.gym) {
             this.setState({
                 count: this.updateRoutes(nextProps.routes),
             })
         }
     }
 
-    updateRoutes = (newRoutes, key) => {
-        key = key === undefined ? this.state.active : key
-        let type = this.props.gym && this.props.gym.type[key] 
+    updateRoutes = (newRoutes, type) => {
+        type = type? type.toLowerCase() : this.props.gym.type[0]
         let grades = this.props.team.grades[type]
         let routes = newRoutes.filter(route => route.type === type)
         this.setState({
@@ -68,45 +67,48 @@ class GymOverview extends Component {
 
     render() {
         if (this.state.error) return <Redirect to='/' />
+        if (!this.props.gym) return (<RtCard style={{ minHeight: 'calc(100vh - 100px)' }}> <LoadBar/></RtCard>)
         return (
-              <RtCard title={ this.props.gym && this.props.gym.name || '' } key={ this.props.gym && this.props.gym.name } style={{minHeight: 'calc(100vh - 100px)'}}>
-            <LoadContainer loaded={ this.state.loaded }>
-              <LoadBar/>
-              <section>
-                <div className="row align-items-stretch">
-                  <div className="col-12">
-                    <TabSwitcher tabs={ this.props.gym && this.props.gym.type } toggle={ this.toggle } active={ this.state.active } />
-                  </div>
-                  <div className="col-12">
-                    <hr className="seperator" />
-                  </div>
-                  <div className="col-xs-12 col-sm-8">
-                    <RtBigBar
-                              data={ this.state.count }
-                              width="500"
-                              height="200"
-                              type={ this.state.active }></RtBigBar>
-                  </div>
-                  <div className="col-sm-4 col-xs-12 col-np d-flex">
-                    <StatsCard data={ this.state.routes } />
-                  </div>
-                </div>
-                <hr className="seperator" />
-                <div className="row">
-                  <div className="col-xs-12">
-                    <ReactCSSTransitionReplace transitionName="load_container" transitionEnterTimeout={ 500 } transitionLeaveTimeout={ 500 }>
-                      <RouteList key={this.state.active}
-                                 routes={ this.state.routes }
-                                 updateRoute={ this.props.updateRoute }
-                                 removeRoutes={ this.props.removeRoutes }
-                                 team={ this.props.team }
-                                 walls={ this.props.gym && this.props.gym.walls } />
-                    </ReactCSSTransitionReplace>
-                  </div>
-                </div>
+            <RtCard title={this.state.loaded? this.props.gym.name : ''} key={this.props.gym.name} style={{ minHeight: 'calc(100vh - 100px)' }}>
+              <LoadContainer loaded={this.state.loaded}>
+                <LoadBar/>
+                <section>
+                  <Row className="align-items-stretch">
+                    <Col xs="12">
+                      <TabSwitcher tabs={this.props.gym.type} toggle={this.toggle} active={this.state.active} />
+                    </Col>
+                    <Col xs="12">
+                      <hr className="seperator" />
+                    </Col>
+                    <Col xs="12" sm="8">
+                      <RtBigBar
+                                data={this.state.count}
+                                width="500"
+                                height="200"
+                                type={this.state.active}
+                                color={this.props.gym.color}></RtBigBar>
+                    </Col>
+                    <Col xs="12" sm="4" className="col-np d-flex">
+                      <StatsCard data={this.state.routes} />
+                    </Col>
+                  </Row>
+                  <hr className="seperator" />
+                  <Row>
+                    <Col>
+                      <ReactCSSTransitionReplace transitionName="load_container" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+                        <RouteList
+                                   key={this.state.active}
+                                   routes={this.state.routes}
+                                   updateRoute={this.props.updateRoute}
+                                   removeRoutes={this.props.removeRoutes}
+                                   team={this.props.team}
+                                   walls={this.props.gym.walls[this.state.active]} />
+                      </ReactCSSTransitionReplace>
+                    </Col>
+                  </Row>
                 </section>
-            </LoadContainer>
-              </RtCard>
+              </LoadContainer>
+            </RtCard>
 
         )
     }

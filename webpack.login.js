@@ -1,30 +1,24 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 const extractSass = new ExtractTextPlugin({
-    filename: '[name].css',
-    disable: process.env.NODE_ENV === 'development'
+    filename: 'css/[name].css'
 })
 
+
 module.exports = {
-    entry: path.resolve(__dirname, './public/main.jsx'),
+    entry: path.resolve(__dirname, './login/main.jsx'),
     output: {
         filename: 'js/[name].js',
         path: path.resolve(__dirname, 'build/login')
     },
     plugins: [
-        // new BrowserSyncPlugin({     // browse to http://localhost:3000/ during
-        // development,     // ./public directory is being served     host: 'localhost',
-        //     port: 3000,     proxy: 'http://localhost:8081'     //server: { baseDir:
-        // ['public'] } }),
         new webpack
             .optimize
             .CommonsChunkPlugin({
-                name: 'vendor',
+                name: 'login.vendor',
                 minChunks: function (module) {
-                    // this assumes your vendor imports exist in the node_modules directory
                     return module.context && module
                         .context
                         .indexOf('node_modules') !== -1
@@ -34,13 +28,8 @@ module.exports = {
     ],
     resolve: {
         modules: [
-            path.resolve(__dirname, 'public'),
             'node_modules'
         ],
-        alias: {
-            rt: path.resolve(__dirname, 'public'),
-            mod: path.resolve(__dirname, 'public/modules')
-        },
         extensions: ['.js', '.json', '.jsx']
     },
     module: {

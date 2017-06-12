@@ -7,7 +7,6 @@ import { getGyms } from 'data/actions/gym'
 
 import RtHeader from './rtHeader'
 import RtContent from './rtContent'
-import RtSidebar from './rtSidebar'
 
 class Main extends Component {
     componentDidMount() { 
@@ -18,8 +17,7 @@ class Main extends Component {
         return (
               <div>
                 <RtHeader location={this.props.location}/>
-                {/*<RtSidebar/>*/}
-                <RtContent/>
+                <RtContent location={this.props.location}/>
               </div>
         )
     }
@@ -44,7 +42,6 @@ function mapDispatch(dispatch) {
         getGyms: (team) => dispatch(getGyms(team))
     }
 }
-
 
 const mainContainer = connect(mapState, mapDispatch)(Main)
 export default mainContainer

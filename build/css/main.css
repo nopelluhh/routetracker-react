@@ -6946,13 +6946,14 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .rt-marker {
   pointer-events: none;
   user-select: none;
-  fill: #636c72; }
+  fill: #636c72;
+  transform: rotate(-90deg); }
 
 .chart {
   width: 100%;
   max-height: 40vh;
   background-color: #ffffff;
-  border: 1px solid #eceeef;
+  border: 1px solid #f7f7f9;
   border-radius: 5px;
   margin-bottom: -5px; }
 
@@ -7007,8 +7008,8 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   clear: both; }
 
 .rt-pane {
-  border: 1px solid #eceeef;
-  border-radius: 3px;
+  border: 1px solid #f7f7f9;
+  border-radius: 0.2rem;
   padding: 10px;
   width: 100%; }
 
@@ -7155,7 +7156,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   min-height: 330px; }
   .wz-list__item {
     text-align: left;
-    font-size: calc(1rem + 0.5vw); }
+    font-size: calc(1rem + 0.5  vw); }
 
 .p5 {
   padding: 5px; }
@@ -7267,6 +7268,9 @@ input:focus {
 .link-plain, .link-plain:hover {
   text-decoration: none; }
 
+.font-alt {
+  font-family: 'Dosis'; }
+
 .load_container-enter {
   opacity: 0; }
 
@@ -7323,9 +7327,6 @@ input:focus {
     top: calc(50% - (1em / 2));
     position: absolute !important; }
 
-.font-alt {
-  font-family: 'Dosis'; }
-
 .content-title {
   font-weight: 800;
   display: block;
@@ -7335,3 +7336,15 @@ input:focus {
   border-radius: 5px;
   padding: 0 10px 3px 10px;
   margin: 0 0 15px 0; }
+
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0; } }
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjc3MvbWFpbi5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

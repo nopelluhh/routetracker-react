@@ -22,7 +22,7 @@ const RouteHeader = (props) => {
           <th onClick={props.handleSort('wall')}>Wall {arrow('wall')}</th>
           <th onClick={props.handleSort('setter')}>Setter {arrow('setter')}</th>
           <th className='hidden-sm-down'>Edit</th>
-          <th>Select {renderIf(props.selected)(<span>/ <a href="#" onClick={props.deleteHandler}>Remove</a></span>)}</th>
+          <th>{props.selected? <a href="#" onClick={props.deleteHandler}>Remove</a> : 'Select'}</th>
         </tr>
       </thead>
     )
@@ -30,7 +30,9 @@ const RouteHeader = (props) => {
 
 RouteHeader.propTypes = {
     handleSort: PropTypes.func.isRequired,
-    sort: PropTypes.string
+    sort: PropTypes.string,
+    selected: PropTypes.bool,
+    deleteHandler: PropTypes.func
 }
 
 export default RouteHeader
