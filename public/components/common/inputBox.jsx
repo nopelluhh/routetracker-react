@@ -23,7 +23,8 @@ class InputBox extends React.Component {
     onBlur = (e) => {
         const data = {
             value: e.target.value,
-            field: this.props.field
+            field: this.props.field,
+            valid: this.state.valid
         }
         this.props.updateForm(data)
     }

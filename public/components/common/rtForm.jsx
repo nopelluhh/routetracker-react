@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import PT from 'prop-types'
+import cx from 'classnames'
 import { InputBox, FlexRow, LoadBar } from 'components/common'
 
 import { renderIf } from 'rtutil'
 
+
+
 class RtForm extends Component {
-    state = {  }
+    state = {
+        valid: new Set()
+    }
 
     static defaultProps = {
         fields: [],
@@ -56,7 +61,7 @@ class RtForm extends Component {
                         </button>
                     ) }
                   { renderIf(this.state.edit)(
-                        <button className={'btn btn-outline-primary' + renderIf(this.props.pending)(' btn-outline-pending')} onClick={ this.save }>
+                        <button disabled={!!this.state.valid.size} className={cx('btn', !this.state.valid.size? 'btn-outline-primary':'disabled', {'btn-outline-pending': this.props.pending})} onClick={ this.save }>
                           Save
                         </button>
                     ) }
@@ -118,10 +123,22 @@ class RtForm extends Component {
     }
 
     updateForm = (update) => {
-        this.setState({
-            data: Object.assign(this.state.data, {
-                [update.field.name]: update.value
-            })
+        this.setState((state) => {
+            let modifier = {}
+            modifier.valid = new Set(state.valid)
+            
+            modifier.data = Object.assign(state.data, 
+                {
+                    [update.field.name]: update.value
+                }, )
+
+            if(!update.valid) {
+                modifier.valid.add(update.field.name)
+            } else {
+                modifier.valid.delete(update.field.name)
+            }
+
+            return modifier
         })
     }
 }

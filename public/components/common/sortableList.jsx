@@ -56,7 +56,7 @@ class SortableList extends Component {
                                                                             data-source="list"
                                                                             key={ item.key || ind }
                                                                             {...item}
-                                                                            {...this.makeOptions(ind, arr, 'list')}/>) }
+                                                                            {...this.makeHandlers(ind, arr, 'list')}/>) }
               </ul>
               </Col>
               { this.state.options ? (
@@ -66,7 +66,7 @@ class SortableList extends Component {
                                                                               data-source="options"
                                                                               key={ item.key || ind }
                                                                               {...item}
-                                                                              {...this.makeOptions(ind, arr, 'options')}/>
+                                                                              {...this.makeHandlers(ind, arr, 'options')}/>
                     ) }
                 </ul>
                 </Col>) : null }
@@ -74,7 +74,7 @@ class SortableList extends Component {
         )
     }
 
-    makeOptions = (ind, arr, source) => {
+    makeHandlers = (ind, arr, source) => {
         return {
             draggable: true,
             onDragStart: (e) => {

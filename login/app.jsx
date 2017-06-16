@@ -1,19 +1,13 @@
 import React from 'react'
+
 import Header from './components/Header'
-import Block from './components/Block'
+import Features from './components/Features'
+import Contact from './components/Contact'
 import Login from './components/Login'
+
 import { Track, TrackDocument } from 'react-track'
 
-const top = (rect, el) => {
-    return rect.top + el.clientHeight
-}
-
-const blockScroll = ({top}) => {
-    const val = ((top / document.documentElement.clientHeight) * 100)
-    return Math.max(-100, Math.min(100, val))
-}
-
-const height = (_, el) => el.clientHeight
+import {top, height, blockScroll} from 'loginutil'
 
 class App extends React.Component {
     state = {
@@ -29,10 +23,17 @@ class App extends React.Component {
           <HeaderTracked scroll={percent} top={top} height={height} toggleLogin={this.toggleLogin}/>
           }
         </Track>
-        <Block style={{backgroundColor: '#ffe205'}}/>
-        <Block style={{backgroundColor: '#12b0ff'}}/>
-        <Block style={{backgroundColor: 'black'}}/>
-        <Login isOpen={this.state.loginOpen}/>
+        <Track component={Features} formulas={[blockScroll, top, height]}>
+          {(FeaturesTracked, percent, top, height) => 
+          <FeaturesTracked scroll={percent} top={top} height={height}/>
+          }
+        </Track>
+        <Track component={Contact} formulas={[blockScroll, top, height]}>
+          {(ContactTracked, percent, top, height) => 
+          <ContactTracked scroll={percent} top={top} height={height}/>
+          }
+        </Track>
+        <Login isOpen={this.state.loginOpen} toggle={this.toggleLogin}/>
       </div>
       )}
     </TrackDocument>

@@ -4,7 +4,7 @@ import WzGrid from './wzGrid'
 import WzContainer from './components/wzContainer'
 import WzStep from './components/wzStep'
 import WzPreview from './components/wzPreview'
-import Swipe from 'components/common/swipeContainer'
+import {SwipeContainer} from 'components/common'
 
 class RtWizard extends Component {
     constructor() {
@@ -19,24 +19,29 @@ class RtWizard extends Component {
         this.steps = ['gym', 'color', 'grade', 'location', 'tags']
     }
 
+
+    componentWillUnmount() {
+        this.props.resetForm()
+    }
+
     render() {
         return (
-            <Swipe onSwipe={this.onSwipe}>
-            <WzContainer step={this.state.step}>
-              { this.stepContent()
-                    .map((step) => (
-                        <WzStep key={step.name} 
-                                name={step.name}
-                                prev={this.move} 
-                                next={this.move} 
-                                update={this.update} 
-                                end={step.end}
-                                review={step.review}>
-                            {step.content}
-                        </WzStep>)
-                ) }
-            </WzContainer>
-            </Swipe>
+            <SwipeContainer onSwipe={this.onSwipe}>
+                <WzContainer step={this.state.step}>
+                { this.stepContent()
+                        .map((step) => (
+                            <WzStep key={step.name} 
+                                    name={step.name}
+                                    prev={this.move} 
+                                    next={this.move} 
+                                    update={this.update} 
+                                    end={step.end}
+                                    review={step.review}>
+                                {step.content}
+                            </WzStep>)
+                    ) }
+                </WzContainer>
+            </SwipeContainer>
         )
     }
 

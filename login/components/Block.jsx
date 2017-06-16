@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class Block extends React.Component {
-    render = () => (
-    <div className="block" style={this.props.style}>
-        {this.props.children}
+import cx from 'classnames'
+
+const Block = (props) => (
+    <div className={cx('block', props.className)} style={props.style}>
+        {props.children}
     </div>
     )
-}
+
 
 Block.propTypes = {
     children: PropTypes.node,

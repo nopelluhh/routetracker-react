@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import {FlexRow, RtSwatch} from 'components/common'
 import { connect } from 'react-redux'
 import { postRoute } from 'data/actions/route'
-import { Button } from 'react-bootstrap'
 
 import {sleep, renderIf} from 'rtutil'
 
 
 class WzPreview extends Component {
     state = {}
+
     render() {
         this.transformedRoute = transformRoute(this.props.route)
         if (this.transformedRoute) {

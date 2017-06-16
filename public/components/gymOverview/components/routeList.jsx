@@ -7,6 +7,10 @@ import RouteHeader from './routeHeader'
 import pi from 'rtutil'
 
 class RouteList extends Component {
+    state = {
+        range: new Set()
+    }
+
     static propTypes = {
         routes: PropTypes.array,
         team: PropTypes.object,
@@ -14,10 +18,10 @@ class RouteList extends Component {
         updateRoute: PropTypes.func,
         removeRoutes: PropTypes.func
     }
+
     componentWillMount() {
         this.setState({
-            routes: sortOn([...this.props.routes], 'set_on'),
-            range: []
+            routes: sortOn([...this.props.routes], 'set_on')
         })
     }
 
@@ -38,7 +42,7 @@ class RouteList extends Component {
                            sort={ this.state.sort }
                            dir={ this.state.dir }
                            deleteHandler={ this.deleteHandler }
-                           selected={ this.state.range.length > 0 } />
+                           selected={ this.state.range.size > 0 } />
               <tbody>
                   { this.state.routes.map((route, ind) => (
                         <RouteRow
@@ -46,7 +50,7 @@ class RouteList extends Component {
                                   key={ route._id + route.updated_at }
                                   route={ route }
                                   selectHandler={ this.selectHandler }
-                                  selected={ this.state.range.includes(ind) }
+                                  selected={ this.state.range.has(ind) }
                                   team={ this.props.team }
                                   updateRoute={ this.updateRoute }
                                   walls={this.props.walls} />
@@ -70,19 +74,23 @@ class RouteList extends Component {
                 let h = Math.max(this.lastSelected, ind)
                 let selected = pi.range(l, h + 1)
                 this.lastSelected = undefined
-                range = this.state.range.concat(selected)
+                range = new Set([...this.state.range, ...selected])
             } else if (modifier && !this.lastSelected) {
                 this.lastSelected = ind
-                range = this.state.range.concat(ind)
-            } else if (shift && this.state.range.length) {
+                range = this.state.range.add(ind)
+            } else if (shift && this.state.range.size) {
                 let l = Math.min(...this.state.range)
                 let h = Math.max(...this.state.range)
                 let selected = ind <= h ? pi.range(ind, h + 1) : pi.range(l, ind + 1)
                 this.lastSelected = undefined
-                range = this.state.range.concat(selected)
+                range = new Set([...this.state.range, ...selected])
+            } else if(document.body.clientWidth < 1000){
+                let temp = new Set(this.state.range)
+                this.state.range.has(ind)? temp.delete(ind) : temp.add(ind)
+                range = temp  
             } else {
                 this.lastSelected = ind
-                range = this.state.range.includes(ind) && this.state.range.length === 1 ? [] : [ind]
+                range = this.state.range.has(ind) && this.state.range.size === 1 ? new Set() : new Set([ind])
             }
 
             this.setState({
@@ -98,7 +106,7 @@ class RouteList extends Component {
 
         this.props.removeRoutes(ids)
         this.setState({
-            range: []
+            range: new Set()
         })
     }
 
@@ -117,8 +125,7 @@ class RouteList extends Component {
             this.setState({
                 dir,
                 sort: param,
-                routes: newRoutes,
-                range: []
+                routes: newRoutes
             })
         }
     }
