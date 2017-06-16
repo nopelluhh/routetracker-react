@@ -17,10 +17,9 @@ class RtBar extends Component {
 export default RtBar
 
 function makeChart() {
-    if (!this.props.data)
-        return
-    const data = this.props.data
+    if (!this.props.data) return
 
+    const { data } = this.props
     const width = 94
     const height = 94
     const barWidth = width / data.length
@@ -58,8 +57,7 @@ function makeChart() {
             return 'translate(' + i * barWidth + ', 0)'
         })
 
-    bar
-        .append('rect')
+    bar.append('rect')
         .classed('rt-bar', true)
         .attr('width', barWidth - 1)
         .attr('rx', 1)

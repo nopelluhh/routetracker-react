@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import GymItem from './gymItem'
+import GymItem from './components/GymItem'
 import { LoadBar, LoadContainer, RtCard }from 'components/common'
 
 class GymList extends Component {

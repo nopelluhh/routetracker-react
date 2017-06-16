@@ -31,6 +31,7 @@ module.exports = {
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        "react/prop-types": [1, { ignore: ['children', 'className']}]
     }
 };

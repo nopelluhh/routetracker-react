@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { RtSwatch, FlexRow, SortableList } from 'components/common'
 
 import RtPie from 'components/rtChart/rtPie'
+import RtStack from 'components/rtChart/RtStack'
 
 
 import { colors } from 'rtconfig'
@@ -51,6 +52,14 @@ class TeamInfo extends Component {
               </div>
               <div className="col-sm"></div>
               <RtPie data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}/>
+              <RtStack data={[{
+                  value: 15
+              }, {
+                  value: 10
+              }, {
+                  value: 50
+              }]}
+              width='100px'/>
             </div>
             
         )

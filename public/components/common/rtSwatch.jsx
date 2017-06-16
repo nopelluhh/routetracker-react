@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import color from 'services/colorService'
 import { connect } from 'react-redux'
+
+import color from 'services/colorService'
 
 class RtSwatch extends Component {
     render() {
@@ -31,7 +32,8 @@ class RtSwatch extends Component {
 
 RtSwatch.propTypes = {
     color: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    colors: PropTypes.array
+    colors: PropTypes.array,
+    style: PropTypes.object
 }
 
 function mapState(state) {

@@ -1,16 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import Block from './block'
+import HeaderText from './HeaderText'
 
-function byPercent(min, max, per) {
-    if (arguments.length === 2) {
-        per = max
-        max = min
-        min = 0
-    }
-
-    return min + (max - min) * (per / 100)
-}
+import {translate} from 'loginutil'
 
 class Header extends React.Component {
     static propTypes = {
@@ -20,22 +14,32 @@ class Header extends React.Component {
     }
 
     render = () => {
-        const {height} = this.props
-        const offset = byPercent(height / 4, height - 60, -this.props.scroll)
-        const shouldPin = this.header && this.header.getBoundingClientRect().top <= 30
-        const pinTo = '30px'
+        const { height } = this.props
+
+        const clientHeight = document.documentElement.clientHeight
+        const offset = translate(0, 100, height / 4, height - 60)(-this.props.scroll)
+        const pinned = this.header && this.header.getBoundingClientRect().top <= clientHeight / 20
+
+        const headerStyle = {
+            top: pinned? `calc(${-this.props.top}px + 5vh` : offset + 'px',
+            transform: pinned? 'none' : 'translate(0, -50%)',
+            zIndex: 300
+        }
+
+        const headerSecondStyle = { 
+            top: pinned ? '5vh' : (-height / 2) + offset + 'px', 
+            position: pinned ? 'fixed' : 'relative', 
+            transform: pinned? 'none' : 'translate(0, -50%)'
+        }
+
         return (
             <Block>
               <div className="header" style={{zIndex: 20}}>
-                <h1 className="header-text" ref={(el) => this.header = el} style={{top: offset + 'px'}}>ROUTETRACKER</h1>
+                <HeaderText refTo={(el) => this.header = el} style={headerStyle}/>
                 <div className="header__login" onClick={this.props.toggleLogin}>LOGIN</div>
               </div>
               <div className="header-two">
-                <h1 className="header-text" style={{ 
-                    top: shouldPin ? pinTo : (-height / 2) + offset + 'px', 
-                    position: shouldPin ? 'fixed' : 'relative', 
-                    transform: shouldPin? 'none' : 'translate(0, -50%)'
-                }}>ROUTETRACKER</h1>
+                <HeaderText style={headerSecondStyle}/>
                 <div className="header-two__content">
                   <span>Simple route management, designed for the whole team.</span>
                 </div>

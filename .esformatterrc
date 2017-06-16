@@ -1,23 +1,25 @@
 {
-        "plugins": [
-            "esformatter-jsx"
-        ],
-        "jsx": {
-            "formatJSXExpressions": true,
-            "JSXExpressionsSingleLine": true,
-            "formatJSX": true,
-            "attrsOnSameLineAsTag": false,
-            "maxAttrsOnTag": 3,
-            "firstAttributeOnSameLine": false,
-            "spaceInJSXExpressionContainers": "",
-            "alignWithFirstAttribute": true,
-            "htmlOptions": { // same as the ones passed to js-beautifier.html 
-                "brace_style": "collapse",
-                "indent_char": " ",
-                "indent_size": 2,
-                "max_preserve_newlines": 2,
-                "preserve_newlines": true
-                //wrap_line_length: 250 
-            }
+    "plugins": [
+        "esformatter-jsx"
+    ],
+    "jsx": {
+        "formatJSXExpressions": true,
+        "JSXExpressionsSingleLine": true,
+        "formatJSX": true,
+        "attrsOnSameLineAsTag": false,
+        "maxAttrsOnTag": 3,
+        "firstAttributeOnSameLine": false,
+        "spaceInJSXExpressionContainers": "",
+        "alignWithFirstAttribute": true,
+        "htmlOptions": { // same as the ones passed to js-beautifier.html 
+            "brace_style": "collapse",
+            "indent_char": "    ",
+            "indent_size": 1,
+            "max_preserve_newlines": 2,
+            "preserve_newlines": true
         }
+    },
+    "indent": {
+        "value": "    Ï"
     }
+}

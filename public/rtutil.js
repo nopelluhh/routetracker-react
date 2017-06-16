@@ -53,6 +53,17 @@ class π {
         return obj
     }
 
+    toggleArray(a, v) {
+        a = [...a]
+        var i = a.indexOf(v)
+        if (i === -1)
+            a.push(v)
+        else
+        a.splice(i,1)
+
+        return a
+    }
+
 
     // internal
 

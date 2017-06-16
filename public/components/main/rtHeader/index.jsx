@@ -45,11 +45,9 @@ class RtHeader extends Component {
             </LinkContainer>
           </Nav>
           <Nav navbar className="ml-auto">
-            <LinkContainer to="/logout">
-              <NavLink>
+              <NavLink href="/logout">
                 Logout
               </NavLink>
-            </LinkContainer>
             <LinkContainer to="/account">
               <NavLink>
                 My Account
