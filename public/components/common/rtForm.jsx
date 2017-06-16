@@ -1,52 +1,52 @@
 import React, { Component } from 'react'
 import PT from 'prop-types'
 import cx from 'classnames'
-import { InputBox, FlexRow, LoadBar } from 'components/common'
+import { InputBox, FlexRow } from 'components/common'
 
 import { renderIf } from 'rtutil'
 
 
 
 class RtForm extends Component {
-    state = {
-        valid: new Set()
-    }
+	state = {
+		valid: new Set()
+	}
 
-    static defaultProps = {
-        fields: [],
-        values: {}
-    }
+	static defaultProps = {
+		fields: [],
+		values: {}
+	}
 
-    static propTypes = {
-        fields: PT.arrayOf(
+	static propTypes = {
+		fields: PT.arrayOf(
             PT.oneOfType([
-                PT.array,
-                PT.shape({
-                    name: PT.string.isRequired,
-                    type: PT.string.isRequired,
-                    label: PT.string,
-                    onBlur: PT.func,
-                    onClick: PT.func,
-                    validate: PT.func
-                })
-            ]
+	PT.array,
+	PT.shape({
+		name: PT.string.isRequired,
+		type: PT.string.isRequired,
+		label: PT.string,
+		onBlur: PT.func,
+		onClick: PT.func,
+		validate: PT.func
+	})
+]
             )).isRequired,
-        values: PT.object,
-        editable: PT.bool,
-        pending: PT.bool,
-        onSave: PT.func
-    }
+		values: PT.object,
+		editable: PT.bool,
+		pending: PT.bool,
+		onSave: PT.func
+	}
 
-    componentWillMount() {
-        if (!this.state.data) {
-            this.setState({
-                data: Object.assign({}, this.props.values)
-            })
-        }
-    }
+	componentWillMount() {
+		if (!this.state.data) {
+			this.setState({
+				data: Object.assign({}, this.props.values)
+			})
+		}
+	}
 
-    render() {
-        return (
+	render() {
+		return (
             <form className="form-horizontal" style={ { opacity: this.props.pending ? 0.5 : 1, transition: 'opacity 0.3s linear', position: 'relative' } }>
               <div className="form-group">
                 <FlexRow inline>
@@ -69,78 +69,75 @@ class RtForm extends Component {
               </div>
               { this.makeForm() }
               </form>
-        )
-    }
+		)
+	}
 
-    toggleEdit = (e) => {
-        e.preventDefault()
-        const data = Object.assign({}, this.state.edit ? this.props.values : this.state.data)
-        this.setState({
-            edit: !this.state.edit,
-            data
-        })
-    }
+	toggleEdit = e => {
+		e.preventDefault()
+		const data = Object.assign({}, this.state.edit ? this.props.values : this.state.data)
+		this.setState({
+			edit: !this.state.edit,
+			data
+		})
+	}
 
-    save = (e) => {
-        e.preventDefault()
-        let result = this.props.onSave(this.state.data)
-        if (result.then) {
-            result.then((data) => {
-                this.setState({
-                    edit: false,
-                    data: data
-                })
-            })
-        } else {
-            this.setState({
-                edit: false,
-                data: result
-            })
-        }
-    }
+	save = e => {
+		e.preventDefault()
+		let result = this.props.onSave(this.state.data)
+		if (result.then) {
+			result.then(data => {
+				this.setState({
+					edit: false,
+					data: data
+				})
+			})
+		} else {
+			this.setState({
+				edit: false,
+				data: result
+			})
+		}
+	}
 
-    makeForm = (fields) => {
-        fields = fields || this.props.fields
-        return fields.map((field, i) => {
-            if (field instanceof Array) {
-                return (<div key={ i } style={ { padding: '30px 0 0' } }>
+	makeForm = fields => {
+		fields = fields || this.props.fields
+		return fields.map((field, i) => {
+			if (field instanceof Array) {
+				return (<div key={ i } style={ { padding: '30px 0 0' } }>
                           <h5>{ field[0] }</h5>
                           <div>
                             { this.makeForm(field.slice(1), this.state.data, this.state.edit) }
                           </div>
                         </div>)
-            } else {
-                return (
+			} else {
+				return (
                     <InputBox
                               key={ field.name }
                               field={ field }
                               values={ this.state.data }
                               edit={ this.state.edit }
                               updateForm={ this.updateForm } />
-                )
-            }
-        })
-    }
+				)
+			}
+		})
+	}
 
-    updateForm = (update) => {
-        this.setState((state) => {
-            let modifier = {}
-            modifier.valid = new Set(state.valid)
-            
-            modifier.data = Object.assign(state.data, 
-                {
-                    [update.field.name]: update.value
-                }, )
+	updateForm = update => {
+		this.setState(state => {
+			let modifier = {
+				valid: new Set(state.valid),
+				data: Object.assign(state.data, {[update.field.name]: update.value})
+			}
 
-            if(!update.valid) {
-                modifier.valid.add(update.field.name)
-            } else {
-                modifier.valid.delete(update.field.name)
-            }
+			if(!update.valid) {
+				modifier.valid.add(update.field.name)
+			} else {
+				modifier.valid.delete(update.field.name)
+			}
 
-            return modifier
-        })
-    }
+			return modifier
+		})
+	}
 }
 
 export default RtForm

@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import { Tab } from 'react-bootstrap'
 import { LoadBar, RtCard, LoadContainer, TabSwitcher } from 'components/common'
-import BasicInfo from './components/basicInfo'
-import TeamInfo from './components/teamInfo'
+import BasicInfo from './components/BasicInfo'
+import TeamInfo from './components/TeamInfo'
 import { renderIf } from 'rtutil'
 
 import { getUser } from 'data/actions/user'
@@ -13,29 +13,29 @@ import { getUser } from 'data/actions/user'
 const tabs = ['Basic Info', 'Team Info']
 
 class Account extends Component {
-    state = {
-        loaded: false,
-        pending: false,
-        active: 'Basic Info'
-    }
+	state = {
+		loaded: false,
+		pending: false,
+		active: 'Basic Info'
+	}
 
-    static propTypes = {
-        getUser: PT.func,
-        user: PT.object
-    }
+	static propTypes = {
+		getUser: PT.func,
+		user: PT.object
+	}
 
-    componentDidMount() {
-        this.props.getUser()
+	componentDidMount() {
+		this.props.getUser()
             .then(() => {
-                this.setState({
-                    loaded: true
-                })
-            })
+	this.setState({
+		loaded: true
+	})
+})
 
-    }
+	}
 
-    render() {
-        return (
+	render() {
+		return (
             <LoadContainer loaded={this.state.loaded}>
               <LoadBar/>
               <RtCard title="My Account">
@@ -52,27 +52,27 @@ class Account extends Component {
                  )}
               </RtCard>
             </LoadContainer>
-        )
-    }
+		)
+	}
 
-    toggle = (ind) => {
-        this.setState({
-            active: ind
-        })
-    }
+	toggle = (ind) => {
+		this.setState({
+			active: ind
+		})
+	}
 
 }
 
 function mapState(state) {
-    return {
-        user: state.user
-    }
+	return {
+		user: state.user
+	}
 }
 
 function mapDispatch(dispatch) {
-    return {
-        getUser: () => dispatch(getUser())
-    }
+	return {
+		getUser: () => dispatch(getUser())
+	}
 }
 
 export default connect(mapState, mapDispatch)(Account)

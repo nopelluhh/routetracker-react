@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { RtSwatch, FlexRow, SortableList } from 'components/common'
+import { RtSwatch, SortableList } from 'components/common'
 
 import RtPie from 'components/rtChart/rtPie'
 import RtStack from 'components/rtChart/RtStack'
@@ -11,27 +11,26 @@ import RtStack from 'components/rtChart/RtStack'
 import { colors } from 'rtconfig'
 
 
-const ListItemColor = (props) => (<li {...props}>
-                               <RtSwatch color={ props.color } />
-                             </li>)
+const ListItemColor = props => <li {...props}><RtSwatch color={ props.color } /></li>
 
-const ListItem = (props) => (<li {...props}>{props.value}</li>)                           
+
+const ListItem = props => (<li {...props}>{props.value}</li>)                           
 
 const available = colors.map(color => {
-    return {
-        color
-    }
+	return {
+		color
+	}
 })
 
 
 class TeamInfo extends Component {
-    state = {  }
+	state = {  }
 
-    static propTypes = {
-        team: PropTypes.object
-    }
-    render() {
-        return (
+	static propTypes = {
+		team: PropTypes.object
+	}
+	render() {
+		return (
             <div className="row">
               <div className="col-sm">
                 <SortableList
@@ -52,24 +51,25 @@ class TeamInfo extends Component {
               </div>
               <div className="col-sm"></div>
               <RtPie data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}/>
-              <RtStack data={[{
-                  value: 15
-              }, {
-                  value: 10
-              }, {
-                  value: 50
-              }]}
+              <RtStack data={[
+	{
+		value: 15
+	}, {
+		value: 10
+	}, {
+		value: 50
+	}]}
               width='100px'/>
             </div>
             
-        )
-    }
+		)
+	}
 }
 
 function mapState(state) {
-    return {
-        team: state.team
-    }
+	return {
+		team: state.team
+	}
 }
 
 export default connect(mapState)(TeamInfo)

@@ -1,6 +1,6 @@
 import SortableList from '../sortableList'
 
-import React, { Component } from 'react'
+import React from 'react'
 import renderer from 'react-test-renderer'
 
 

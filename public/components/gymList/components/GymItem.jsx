@@ -10,16 +10,22 @@ import { getRoutesByGym } from 'data/actions/route'
 import π from 'rtutil'
 
 class GymItem extends Component {
-    state = {
-        data: undefined
-    }
+	state = {
+		data: undefined
+	}
 
-    componentDidMount() {
-        this.props.getRoutes(this.props.gym._id)
-    }
+	static propTypes = {
+		gym: PropTypes.object,
+		getRoutes: PropTypes.func,
+		data: PropTypes.array
+	}
 
-    render() {
-        return (
+	componentDidMount() {
+		this.props.getRoutes(this.props.gym._id)
+	}
+
+	render() {
+		return (
             <div className="gym-item">
               <div>
                 <div className="gym-title text-brand text-uppercase text-thin">
@@ -34,32 +40,28 @@ class GymItem extends Component {
                 </div>
               </div>
             </div>
-        )
-    }
-}
-
-GymItem.propTypes = {
-    gym: PropTypes.object
+		)
+	}
 }
 
 function mapState(state, ownProps) {
-    let gymRoutes = state.routes.toArray().filter(route => route.gym === ownProps.gym._id)
+	let gymRoutes = state.routes.toArray().filter(route => route.gym === ownProps.gym._id)
 
-    return {
-        data: transformRoutes(gymRoutes)
-    }
+	return {
+		data: transformRoutes(gymRoutes)
+	}
 }
 
 function mapDispatch(dispatch) {
-    return {
-        getRoutes: (id) => dispatch(getRoutesByGym(id))
-    }
+	return {
+		getRoutes: id => dispatch(getRoutesByGym(id))
+	}
 }
 
 export default connect(mapState, mapDispatch)(GymItem)
 
 function transformRoutes(routes) {
-    if (!routes.length) return null
-    let sorted = π.buckets(routes.map(boulder => boulder.grade), π.range(13))
-    return Object.keys(sorted).map(key => sorted[key])
+	if (!routes.length) return null
+	let sorted = π.buckets(routes.map(boulder => boulder.grade), π.range(13))
+	return Object.keys(sorted).map(key => sorted[key])
 }

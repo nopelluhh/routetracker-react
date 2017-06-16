@@ -1,19 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {renderIf} from 'rtutil'
 
 const arrows = { 
-    'asc': '\u25B2',
-    'desc': '\u25BC'
+	'asc': '\u25B2',
+	'desc': '\u25BC'
 }
 
 
 const RouteHeader = (props) => {
-    function arrow(param) {
-        return props.sort === param? arrows[props.dir] : null
-    } 
+	function arrow(param) {
+		return props.sort === param? arrows[props.dir] : null
+	} 
 
-    return (
+	return (
       <thead>
         <tr className="table-center">
           <th onClick={props.handleSort('set_on')}>Date {arrow('set_on')}</th>
@@ -25,14 +24,15 @@ const RouteHeader = (props) => {
           <th>{props.selected? <a href="#" onClick={props.deleteHandler}>Remove</a> : 'Select'}</th>
         </tr>
       </thead>
-    )
+	)
 }
 
 RouteHeader.propTypes = {
-    handleSort: PropTypes.func.isRequired,
-    sort: PropTypes.string,
-    selected: PropTypes.bool,
-    deleteHandler: PropTypes.func
+	handleSort: PropTypes.func.isRequired,
+	sort: PropTypes.string,
+	selected: PropTypes.bool,
+	deleteHandler: PropTypes.func,
+	dir: PropTypes.string
 }
 
 export default RouteHeader

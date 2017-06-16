@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import WzPage from './wzPage'
 import {RtCard} from 'components/common/'
 
-const WzStep = (props) => {
-    return props.review? (
+const WzStep = props => (
+	props.review? (
     <div className="wz-item">
       <div className="h3"></div>
       <RtCard title={props.name}>{props.children}</RtCard>
@@ -17,14 +17,14 @@ const WzStep = (props) => {
       { props.children }
     </div>
     )
-}
+)
 
 WzStep.propTypes = {
-    review: PropTypes.bool,
-    name: PropTypes.string,
-    children: PropTypes.node,
-    next: PropTypes.func,
-    prev: PropTypes.func
+	review: PropTypes.bool,
+	name: PropTypes.string,
+	children: PropTypes.node,
+	next: PropTypes.func,
+	prev: PropTypes.func
 }
 
 export default WzStep
