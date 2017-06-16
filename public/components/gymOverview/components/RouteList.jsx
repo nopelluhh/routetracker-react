@@ -17,7 +17,7 @@ class RouteList extends Component {
 		gym: PropTypes.object,
 		updateRoute: PropTypes.func,
 		removeRoutes: PropTypes.func,
-		walls: PropTypes.object
+		walls: PropTypes.array
 	}
 
 	componentWillMount() {

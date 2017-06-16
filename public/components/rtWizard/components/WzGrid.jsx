@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import WzListItem from './components/wzListItem'
-import WzItem from './components/wzItem'
+import WzListItem from './wzListItem'
+import WzItem from './wzItem'
 
 const WzGrid = props => {
 	const El = props.list ? WzListItem : WzItem
@@ -18,8 +18,6 @@ const WzGrid = props => {
             </div>
 	)
 }
-
-
 
 WzGrid.propTypes = {
 	items: PropTypes.array,

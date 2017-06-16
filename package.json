@@ -44,7 +44,6 @@
         "bcrypt-node": "^0.1.0",
         "body-parser": "^1.17.1",
         "bootstrap": "next",
-        "bootstrap-sass": "^3.3.7",
         "browser-sync": "^2.18.8",
         "browser-sync-webpack-plugin": "^1.1.4",
         "chokidar": "^1.7.0",
