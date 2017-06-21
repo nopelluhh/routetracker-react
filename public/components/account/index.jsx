@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import { Tab } from 'react-bootstrap'
 import { LoadBar, RtCard, LoadContainer, TabSwitcher } from 'components/common'
-import BasicInfo from './components/BasicInfo'
-import TeamInfo from './components/TeamInfo'
+import BasicInfo from './components/basicInfo'
+import TeamInfo from './components/teamInfo'
 import { renderIf } from 'rtutil'
 
 import { getUser } from 'data/actions/user'
@@ -55,7 +55,7 @@ class Account extends Component {
 		)
 	}
 
-	toggle = (ind) => {
+	toggle = ind => {
 		this.setState({
 			active: ind
 		})
