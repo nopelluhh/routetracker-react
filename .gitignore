@@ -50,6 +50,9 @@ public/dist/*hot-update.js
 
 # build
 
-build
+build/js
+build/css
+build/svg
+build/*.hot-update.*
 
 
