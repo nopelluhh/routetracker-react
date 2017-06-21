@@ -7,40 +7,40 @@ import React, { Component } from 'react'
 import Main from 'components/main'
 
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware} from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import createHistory from 'history/createBrowserHistory'
 import thunk from 'redux-thunk'
 import fetcher from 'services/fetcher'
 import mainReducer from 'data/reducers'
-import { ConnectedRouter, routerMiddleware} from 'react-router-redux'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 const history = createHistory()
 const routeMiddleware = routerMiddleware(history)
 
 const store = createStore(
-    mainReducer, 
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), 
-    applyMiddleware(routeMiddleware, thunk.withExtraArgument(fetcher))
-    )
+	mainReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+	applyMiddleware(routeMiddleware, thunk.withExtraArgument(fetcher))
+)
 
 if (module.hot) {
-    module.hot.accept('./data/reducers', () => {
-        const nextRootReducer = require('./data/reducers/index')
-        store.replaceReducer(nextRootReducer)
-    })
+	module.hot.accept('./data/reducers', () => {
+		const nextRootReducer = require('./data/reducers/index')
+		store.replaceReducer(nextRootReducer)
+	})
 }
 
 
 
 class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
+	render() {
+		return (
+			<Provider store={store}>
                 <ConnectedRouter history={history}>
                     <Main/>
                 </ConnectedRouter>
             </Provider>
-        )
-    }
+		)
+	}
 }
 
 export default App

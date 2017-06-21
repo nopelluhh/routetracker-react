@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import { RtPane } from 'components/common'
 
 class StatsCard extends Component {
-    componentDidMount() {
-        this.setState({
-            data: this.makeOverview(this.props.data)
-        })
-    }
-    render() {
-        if (!this.state) return null
-        return (
+	componentDidMount() {
+		this.setState({
+			data: this.makeOverview(this.props.data)
+		})
+	}
+	
+	render() {
+		if (!this.state) return null
+		return (
             <RtPane>
               <span className="rt-pane__header">Overview</span>
               <table className="table">
@@ -42,25 +43,26 @@ class StatsCard extends Component {
                 </tbody>
               </table>
             </RtPane>
-        )
-    }
+		)
+	}
 
-    makeOverview(data) {
-        let min = Infinity
+	makeOverview(data) {
+		let min = Infinity
 
-        data.forEach(route => {
-            if (min > Date.parse(route.set_on))
-                min = route.set_on
-        })
-        return {
-            count: data.length,
-            oldest: new Date(min).toLocaleDateString()
-        }
-    }
+		data.forEach(route => {
+			if (min > Date.parse(route.set_on))
+				min = route.set_on
+		})
+		
+		return {
+			count: data.length,
+			oldest: new Date(min).toLocaleDateString()
+		}
+	}
 }
 
 StatsCard.propTypes = {
-    data: PropTypes.array
+	data: PropTypes.array
 }
 
 

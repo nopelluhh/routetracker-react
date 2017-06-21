@@ -7,35 +7,36 @@ import RouteHeader from './routeHeader'
 import pi from 'rtutil'
 
 class RouteList extends Component {
-    state = {
-        range: new Set()
-    }
+	state = {
+		range: new Set()
+	}
 
-    static propTypes = {
-        routes: PropTypes.array,
-        team: PropTypes.object,
-        gym: PropTypes.object,
-        updateRoute: PropTypes.func,
-        removeRoutes: PropTypes.func
-    }
+	static propTypes = {
+		routes: PropTypes.array,
+		team: PropTypes.object,
+		gym: PropTypes.object,
+		updateRoute: PropTypes.func,
+		removeRoutes: PropTypes.func,
+		walls: PropTypes.array
+	}
 
-    componentWillMount() {
-        this.setState({
-            routes: sortOn([...this.props.routes], 'set_on')
-        })
-    }
+	componentWillMount() {
+		this.setState({
+			routes: sortOn([...this.props.routes], 'set_on')
+		})
+	}
 
-    componentWillReceiveProps(next) {
-        if (next.routes) {
-            let routes = sortOn(next.routes, this.state.sort || 'set_on')
-            this.setState({
-                routes: this.state.dir === 'desc' ? routes.reverse() : routes
-            })
-        }
-    }
+	componentWillReceiveProps(next) {
+		if (next.routes) {
+			let routes = sortOn(next.routes, this.state.sort || 'set_on')
+			this.setState({
+				routes: this.state.dir === 'desc' ? routes.reverse() : routes
+			})
+		}
+	}
 
-    render() {
-        return (
+	render() {
+		return (
             <table className='table table-sm table-mobile table-fixed table__routelist'>
               <RouteHeader
                            handleSort={ this.handleSort }
@@ -57,107 +58,103 @@ class RouteList extends Component {
                     )) }
               </tbody>
             </table>
-        )
-    }
+		)
+	}
 
-    selectHandler = {
-        mouseDown: (e) => {
-            e.preventDefault()
+	selectHandler = {
+		mouseDown: e => {
+			e.preventDefault()
 
-            let modifier = e.ctrlKey || e.metaKey
-            let shift = e.shiftKey
-            let ind = Number(e.target.dataset.index)
-            let range
+			let modifier = e.ctrlKey || e.metaKey
+			let shift = e.shiftKey
+			let ind = Number(e.target.dataset.index)
+			let range
 
-            if (modifier && this.lastSelected !== undefined) {
-                let l = Math.min(this.lastSelected, ind)
-                let h = Math.max(this.lastSelected, ind)
-                let selected = pi.range(l, h + 1)
-                this.lastSelected = undefined
-                range = new Set([...this.state.range, ...selected])
-            } else if (modifier && !this.lastSelected) {
-                this.lastSelected = ind
-                range = this.state.range.add(ind)
-            } else if (shift && this.state.range.size) {
-                let l = Math.min(...this.state.range)
-                let h = Math.max(...this.state.range)
-                let selected = ind <= h ? pi.range(ind, h + 1) : pi.range(l, ind + 1)
-                this.lastSelected = undefined
-                range = new Set([...this.state.range, ...selected])
-            } else if(document.body.clientWidth < 1000){
-                let temp = new Set(this.state.range)
-                this.state.range.has(ind)? temp.delete(ind) : temp.add(ind)
-                range = temp  
-            } else {
-                this.lastSelected = ind
-                range = this.state.range.has(ind) && this.state.range.size === 1 ? new Set() : new Set([ind])
-            }
+			if (modifier && this.lastSelected !== undefined) {
+				let l = Math.min(this.lastSelected, ind)
+				let h = Math.max(this.lastSelected, ind)
+				let selected = pi.range(l, h + 1)
+				this.lastSelected = undefined
+				range = new Set([...this.state.range, ...selected])
+			} else if (modifier && !this.lastSelected) {
+				this.lastSelected = ind
+				range = this.state.range.add(ind)
+			} else if (shift && this.state.range.size) {
+				let l = Math.min(...this.state.range)
+				let h = Math.max(...this.state.range)
+				let selected = ind <= h ? pi.range(ind, h + 1) : pi.range(l, ind + 1)
+				this.lastSelected = undefined
+				range = new Set([...this.state.range, ...selected])
+			} else if(document.body.clientWidth < 1000){
+				let temp = new Set(this.state.range)
+				this.state.range.has(ind)? temp.delete(ind) : temp.add(ind)
+				range = temp  
+			} else {
+				this.lastSelected = ind
+				range = this.state.range.has(ind) && this.state.range.size === 1 ? new Set() : new Set([ind])
+			}
 
-            this.setState({
-                range
-            })
-        }
-    }
+			this.setState({
+				range
+			})
+		}
+	}
 
-    deleteHandler = (event) => {
-        event.preventDefault()
-        const inds = [...new Set(this.state.range)]
-        const ids = inds.map(ind => this.state.routes[ind]._id)
+	deleteHandler = event => {
+		event.preventDefault()
+		const inds = [...new Set(this.state.range)]
+		const ids = inds.map(ind => this.state.routes[ind]._id)
 
-        this.props.removeRoutes(ids)
-        this.setState({
-            range: new Set()
-        })
-    }
+		this.props.removeRoutes(ids)
+		this.setState({
+			range: new Set()
+		})
+	}
 
-    handleSort = (param) => {
-        return () => {
-            let newRoutes = [...this.state.routes],
-                dir
-            if (this.state.sort === param) {
-                newRoutes.reverse()
-                dir = this.state.dir === 'asc' ? 'desc' : 'asc'
-            } else {
-                sortOn(newRoutes, param)
-                dir = 'asc'
-            }
+	handleSort = param => () => {
+		let newRoutes = [...this.state.routes],
+			dir
+		if (this.state.sort === param) {
+			newRoutes.reverse()
+			dir = this.state.dir === 'asc' ? 'desc' : 'asc'
+		} else {
+			sortOn(newRoutes, param)
+			dir = 'asc'
+		}
 
-            this.setState({
-                dir,
-                sort: param,
-                routes: newRoutes
-            })
-        }
-    }
+		this.setState({
+			dir,
+			sort: param,
+			routes: newRoutes
+		})
+	}
 
-    updateRoute = (newRoute) => {
-        this.setState({
-            routes: this.state.routes.map(route => {
-                return route._id === newRoute._id ? newRoute : route
-            })
-        })
-        this.props.updateRoute(newRoute)
-    }
+	updateRoute = newRoute => {
+		this.setState({
+			routes: this.state.routes.map(route => route._id === newRoute._id ? newRoute : route)
+		})
+		this.props.updateRoute(newRoute)
+	}
 }
 
 function sortOn(arr, prop) {
-    if (prop === 'grade') {
-        return arr.sort((a, b) => a[prop] - b[prop])
-    }
+	if (prop === 'grade') {
+		return arr.sort((a, b) => a[prop] - b[prop])
+	}
 
-    if (prop === 'set_on') {
-        return arr.sort((a, b) => Date.parse(a.set_on) - Date.parse(b.set_on))
-    }
-    return arr.sort(
+	if (prop === 'set_on') {
+		return arr.sort((a, b) => Date.parse(a.set_on) - Date.parse(b.set_on))
+	}
+	return arr.sort(
         function(a, b) {
-            if (a[prop] < b[prop]) {
-                return -1
-            } else if (a[prop] > b[prop]) {
-                return 1
-            } else {
-                return 0
-            }
-        }
+	if (a[prop] < b[prop]) {
+		return -1
+	} else if (a[prop] > b[prop]) {
+		return 1
+	} else {
+		return 0
+	}
+}
     )
 }
 

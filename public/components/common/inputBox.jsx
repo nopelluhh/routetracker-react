@@ -3,36 +3,36 @@ import PropTypes from 'prop-types'
 
 
 class InputBox extends React.Component {
-    state = {
-        valid: true
-    }
+	state = {
+		valid: true
+	}
 
-    static propTypes = {
-        updateForm: PropTypes.func
-    }
+	static propTypes = {
+		updateForm: PropTypes.func
+	}
 
-    handleChange = (e) => {
-        if (this.props.field.validate) {
-            let valid = this.props.field.validate(e.target.value)
-            this.setState({
-                valid
-            })
-        }
-    }
+	handleChange = e => {
+		if (this.props.field.validate) {
+			let valid = this.props.field.validate(e.target.value)
+			this.setState({
+				valid
+			})
+		}
+	}
 
-    onBlur = (e) => {
-        const data = {
-            value: e.target.value,
-            field: this.props.field,
-            valid: this.state.valid
-        }
-        this.props.updateForm(data)
-    }
+	onBlur = e => {
+		const data = {
+			value: e.target.value,
+			field: this.props.field,
+			valid: this.state.valid
+		}
+		this.props.updateForm(data)
+	}
 
-    render() {
-        let {field, values} = this.props
+	render() {
+		let {field, values} = this.props
 
-        return (
+		return (
             <div className={ this.state.valid ? 'form-group row' : 'form-group row has-warning' } key={ field.label }>
               <label className="form-control-label col-md-2 col-form-label">
                 { field.label }
@@ -53,13 +53,13 @@ class InputBox extends React.Component {
                   ) }
               </div>
             </div>)
-    }
+	}
 }
 
 InputBox.propTypes = {
-    field: PropTypes.object,
-    values: PropTypes.object,
-    edit: PropTypes.bool
+	field: PropTypes.object,
+	values: PropTypes.object,
+	edit: PropTypes.bool
 }
 
 

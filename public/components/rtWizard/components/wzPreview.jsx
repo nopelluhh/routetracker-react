@@ -8,12 +8,12 @@ import {sleep, renderIf} from 'rtutil'
 
 
 class WzPreview extends Component {
-    state = {}
+	state = {}
 
-    render() {
-        this.transformedRoute = transformRoute(this.props.route)
-        if (this.transformedRoute) {
-            return (
+	render() {
+		this.transformedRoute = transformRoute(this.props.route)
+		if (this.transformedRoute) {
+			return (
                 <div>
                     {this.transformedRoute? (
                   <ul className="wz-list p10">
@@ -44,62 +44,62 @@ class WzPreview extends Component {
                     <button className={'btn btn-outline-primary' + renderIf(this.state.pending)(' btn-outline-pending')} onClick={this.postRoute}>Add Route</button>
                   </FlexRow>
                 </div>
-            )
-        }
-        return null
-    }
+		)
+		}
+		return null
+	}
 
-    postRoute = () => {
-        this.setState({pending: true})
-        this.props.postRoute(this.transformedRoute)
+	postRoute = () => {
+		this.setState({pending: true})
+		this.props.postRoute(this.transformedRoute)
             .then(sleep(1000))
             .then(() => {
-                this.props.reset()
-                this.setState({
-                    added: true,
-                    pending: false
-                })
-            })
-    }
+	this.props.reset()
+	this.setState({
+		added: true,
+		pending: false
+	})
+})
+	}
 
-    edit = () => {
-        this.props.move(-1)
-    }
+	edit = () => {
+		this.props.move(-1)
+	}
 }
 
 WzPreview.propTypes = {
-    route: PropTypes.object,
-    grades: PropTypes.object,
-    reset: PropTypes.func,
-    move: PropTypes.func,
-    postRoute: PropTypes.func
+	route: PropTypes.object,
+	grades: PropTypes.object,
+	reset: PropTypes.func,
+	move: PropTypes.func,
+	postRoute: PropTypes.func
 }
 
 function transformRoute(obj) {
-    if (obj.gym && obj.grade && obj.color && obj.tags && obj.location)
-        return {
-            type: obj.type,
-            color: obj.color.value,
-            grade: obj.grade._id,
-            gym: obj.gym._id,
-            wall: obj.location,
-            tags: obj.tags.join(', '),
-            set_on: Date.now()
-        }
-    return false
+	if (obj.gym && obj.grade && obj.color && obj.tags && obj.location)
+		return {
+			type: obj.type,
+			color: obj.color.value,
+			grade: obj.grade._id,
+			gym: obj.gym._id,
+			wall: obj.location,
+			tags: obj.tags.join(', '),
+			set_on: Date.now()
+		}
+	return false
 }
 
 function mapState(state) {
-    return {
-        route: state.route,
-        grades: state.team.grades
-    }
+	return {
+		route: state.route,
+		grades: state.team.grades
+	}
 }
 
 function mapDispatch(dispatch) {
-    return {
-        postRoute: (route) => dispatch(postRoute(route))
-    }
+	return {
+		postRoute: (route) => dispatch(postRoute(route))
+	}
 }
 
 export default connect(mapState, mapDispatch)(WzPreview)

@@ -6,9 +6,9 @@ import { RtSwatch, FlexRow, Icon } from 'components/common'
 import {dateMath} from 'rtutil'
 import {dissoc, omit} from 'ramda'
 
-const TdInput = (props) => <td className={props.className}><input {...dissoc('className', props)} className="input-sm form-control"/></td>
+const TdInput = props => <td className={props.className}><input {...dissoc('className', props)} className="input-sm form-control"/></td>
 
-const TdSelect = (props) => (
+const TdSelect = props => (
   <td className={props.className}>
     <select className="input-sm form-control" {...omit(['className', 'children'], props)}>
       {props.children}
@@ -18,22 +18,22 @@ const TdSelect = (props) => (
 
 
 class RouteRow extends React.Component {
-    state = {
-        edit: false
-    }
+	state = {
+		edit: false
+	}
 
-    static propTypes = {
-        ind: PropTypes.number,
-        route: PropTypes.object,
-        selectHandler: PropTypes.object,
-        selected: PropTypes.bool,
-        team: PropTypes.object,
-        updateRoute: PropTypes.func,
-        walls: PropTypes.array
-    }
+	static propTypes = {
+		ind: PropTypes.number,
+		route: PropTypes.object,
+		selectHandler: PropTypes.object,
+		selected: PropTypes.bool,
+		team: PropTypes.object,
+		updateRoute: PropTypes.func,
+		walls: PropTypes.array
+	}
 
-    render() {
-        return this.state.edit ? (
+	render() {
+		return this.state.edit ? (
       <tr className={'table-center ' + (this.props.selected ? 'route-row__selected' : '')}>
         <TdInput
                  type="text"
@@ -113,34 +113,34 @@ class RouteRow extends React.Component {
         </td>
       </tr>
       )
-    }
+	}
 
-    cancelEdit = () => {
-        this.setState({
-            edit: !this.state.edit
-        })
-    }
+	cancelEdit = () => {
+		this.setState({
+			edit: !this.state.edit
+		})
+	}
 
-    toggleEdit = () => {
-        if (this.state.edit) {
-            this.props.updateRoute(this.route)
-        } else {
-            this.route = Object.assign({}, this.props.route)
-        }
+	toggleEdit = () => {
+		if (this.state.edit) {
+			this.props.updateRoute(this.route)
+		} else {
+			this.route = Object.assign({}, this.props.route)
+		}
 
 
-        this.setState({
-            edit: !this.state.edit
-        })
-    }
+		this.setState({
+			edit: !this.state.edit
+		})
+	}
 
-    deleteRoute = () => {
-    }
+	deleteRoute = () => {
+	}
 
-    updateField = (event) => {
-        let field = event.target.name
-        this.route[field] = event.target.value
-    }
+	updateField = event => {
+		let field = event.target.name
+		this.route[field] = event.target.value
+	}
 }
 
 

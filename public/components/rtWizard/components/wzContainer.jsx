@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const WzContainer = (props) => (
+const WzContainer = props => (
     <div className="wz-big-container">
       <div className="left-wing"></div>
       <div className="wz-container">
@@ -11,5 +12,9 @@ const WzContainer = (props) => (
       < div className="right-wing"> </div>
     </div>
 )
+
+WzContainer.propTypes = {
+	step: PropTypes.number
+}
 
 export default WzContainer
