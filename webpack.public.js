@@ -67,16 +67,16 @@ module.exports = {
 				use: [{
 					loader: 'babel-loader',
 					options: {
-						presets: [
-							['latest', {
-								'modules': false
-							}], 'react'
+						presets: [[require('babel-preset-latest'), {
+							'modules': false
+						}], require('babel-preset-react')
 						],
 						plugins: ['transform-class-properties', 'transform-object-rest-spread']
 					}
 
 				}]
-			}, {
+			},
+			{
 				test: /\.scss$/,
 				use: extractSass.extract({
 					use: [

@@ -11,7 +11,7 @@
         "start:hot": "concurrently -k 'NODE_ENV=development webpack-dev-server' 'node server'",
         "start:wp": "NODE_ENV=development webpack-dev-server",
         "start:mobile": "HOST=172.20.10.2 yarn start",
-        "build": "NODE_ENV=development webpack -w"
+        "build": "find build/ -name '*hot-update*' -delete && NODE_ENV=development webpack -w"
     },
     "repository": {
         "type": "git",
@@ -78,10 +78,10 @@
         "prop-types": "^15.5.8",
         "ramda": "^0.24.0",
         "raw-loader": "^0.5.1",
-        "react": "^15.5.4",
-        "react-bootstrap": "^0.30.10",
-        "react-css-transition-replace": "^2.2.0",
-        "react-dom": "^15.5.4",
+        "react": "next",
+        "react-bootstrap": "^0.31.0",
+        "react-css-transition-replace": "^2.2.1",
+        "react-dom": "next",
         "react-hot-loader": "next",
         "react-parallax-component": "^1.0.6",
         "react-redux": "^5.0.4",

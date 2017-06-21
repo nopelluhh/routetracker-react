@@ -116,7 +116,7 @@ class GymOverview extends Component {
 		)
 	}
 
-	toggle = (key) => {
+	toggle = key => {
 		if (this.state.active === key) return
 		let routes = this.updateRoutes(this.props.routes, key)
 		this.setState({
@@ -132,7 +132,7 @@ class GymOverview extends Component {
             .catch(this.setError)
 	}
 
-	onTeam = (name) => (team) => {
+	onTeam = name => team => {
 		let currentGym = team.gyms.filter(gym => name === gym.url)[0]
 		if (!currentGym) {
 			this.setState({
@@ -167,9 +167,9 @@ function mapState(state, ownProps) {
 function mapDispatch(dispatch) {
 	return {
 		getTeam: () => dispatch(getTeam()),
-		getRoutes: (id) => dispatch(getRoutesByGym(id)),
-		updateRoute: (route) => dispatch(putRoute(route)),
-		removeRoutes: (arr) => dispatch(removeRoutes(arr))
+		getRoutes: id => dispatch(getRoutesByGym(id)),
+		updateRoute: route => dispatch(putRoute(route)),
+		removeRoutes: arr => dispatch(removeRoutes(arr))
 	}
 }
 
@@ -178,10 +178,8 @@ export default connect(mapState, mapDispatch)(GymOverview)
 function transformRoutes(routes, grades) {
 	if (!grades || !routes) return []
 	let sorted = pi.buckets(routes.map(route => route.grade), pi.range(grades.length))
-	return Object.keys(sorted).map(key => {
-		return {
+	return Object.keys(sorted).map(key => ({
 			grade: grades[key] && grades[key].value,
 			count: sorted[key]
-		}
-	})
+		}))
 }
