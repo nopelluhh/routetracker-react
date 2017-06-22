@@ -101,7 +101,7 @@ var _Login = __webpack_require__(31);
 
 var _Login2 = _interopRequireDefault(_Login);
 
-var _reactTrack = __webpack_require__(48);
+var _reactTrack = __webpack_require__(49);
 
 var _loginutil = __webpack_require__(6);
 
@@ -188,7 +188,7 @@ exports.default = App;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -205,7 +205,13 @@ var _HeaderText = __webpack_require__(11);
 
 var _HeaderText2 = _interopRequireDefault(_HeaderText);
 
+var _fetcher = __webpack_require__(32);
+
+var _fetcher2 = _interopRequireDefault(_fetcher);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -214,74 +220,119 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Content = function Content(props) {
-    return _react2.default.createElement(
-        'div',
-        { className: 'block__content' },
-        props.children
-    );
+	return _react2.default.createElement(
+		'div',
+		{ className: 'block__content' },
+		props.children
+	);
 };
 
 var Contact = function (_Component) {
-    _inherits(Contact, _Component);
+	_inherits(Contact, _Component);
 
-    function Contact() {
-        _classCallCheck(this, Contact);
+	function Contact() {
+		var _ref;
 
-        return _possibleConstructorReturn(this, (Contact.__proto__ || Object.getPrototypeOf(Contact)).apply(this, arguments));
-    }
+		var _temp, _this, _ret;
 
-    _createClass(Contact, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+		_classCallCheck(this, Contact);
 
-            var pinned = this.props.scroll < 0;
-            var offset = -this.props.top + 30;
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
 
-            var headerStyle = {
-                top: pinned ? '5vh' : offset + 'px',
-                position: pinned ? 'fixed' : 'relative',
-                transform: 'none',
-                zIndex: 300
-            };
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Contact.__proto__ || Object.getPrototypeOf(Contact)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+			content: '',
+			email: '',
+			name: ''
+		}, _this.sendEmail = function (event) {
+			event.preventDefault();
+			_fetcher2.default.create('notifications', _this.state).then(function () {
+				_this.setState({ content: 'thanks for your message!' });
+			}).catch(function () {
+				_this.setState({ content: 'woe is you!' });
+			});
+		}, _this.clearForm = function () {
+			event.preventDefault();
+			_this.setState({
+				email: '',
+				content: '',
+				name: ''
+			});
+		}, _this.handleChange = function (event) {
+			_this.setState(_defineProperty({}, event.target.name, event.target.value));
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
 
-            return _react2.default.createElement(
-                _Block2.default,
-                { className: 'contact', style: { overflow: 'hidden' } },
-                _react2.default.createElement(_HeaderText2.default, { ref: function ref(el) {
-                        return _this2.header = el;
-                    }, style: headerStyle }),
-                _react2.default.createElement(
-                    Content,
-                    null,
-                    _react2.default.createElement(
-                        'form',
-                        { method: 'POST', className: 'contact__form' },
-                        _react2.default.createElement(
-                            'h3',
-                            { className: 'text-center' },
-                            ' CONTACT US '
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'flex space-between' },
-                            _react2.default.createElement('input', { type: 'text', name: 'name', placeholder: 'name', className: 'text-center' }),
-                            _react2.default.createElement('input', { type: 'email', name: 'email', placeholder: 'email', className: 'text-center' })
-                        ),
-                        _react2.default.createElement('textarea', { name: 'body', placeholder: 'ask us anything!', style: { width: '100%', height: '30vh' } }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'flex space-around', style: { width: '40%', margin: 'auto' } },
-                            _react2.default.createElement('input', { type: 'button', value: 'Clear' }),
-                            _react2.default.createElement('input', { type: 'submit' })
-                        )
-                    )
-                )
-            );
-        }
-    }]);
+	_createClass(Contact, [{
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
 
-    return Contact;
+			var pinned = this.props.scroll < 0;
+			var offset = -this.props.top + 30;
+
+			var headerStyle = {
+				top: pinned ? '5vh' : offset + 'px',
+				position: pinned ? 'fixed' : 'relative',
+				transform: 'none',
+				zIndex: 300
+			};
+
+			return _react2.default.createElement(
+				_Block2.default,
+				{ className: 'contact', style: { overflow: 'hidden' } },
+				_react2.default.createElement(_HeaderText2.default, { ref: function ref(el) {
+						return _this2.header = el;
+					}, style: headerStyle }),
+				_react2.default.createElement(
+					Content,
+					null,
+					_react2.default.createElement(
+						'form',
+						{ className: 'contact__form' },
+						_react2.default.createElement(
+							'h3',
+							{ className: 'text-center' },
+							'CONTACT US'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'flex space-between' },
+							_react2.default.createElement('input', {
+								type: 'text',
+								name: 'name',
+								placeholder: 'name',
+								className: 'text-center',
+								value: this.state.name,
+								onChange: this.handleChange }),
+							_react2.default.createElement('input', {
+								type: 'email',
+								name: 'email',
+								placeholder: 'email',
+								className: 'text-center',
+								value: this.state.email,
+								onChange: this.handleChange })
+						),
+						_react2.default.createElement('textarea', {
+							name: 'content',
+							placeholder: 'ask us anything!',
+							style: { width: '100%', height: '30vh' },
+							value: this.state.content,
+							onChange: this.handleChange }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'flex space-around', style: { width: '40%', margin: 'auto' } },
+							_react2.default.createElement('input', { type: 'button', value: 'Clear', onClick: this.clearForm }),
+							_react2.default.createElement('input', { type: 'button', value: 'Submit', onClick: this.sendEmail })
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return Contact;
 }(_react.Component);
 
 exports.default = Contact;
@@ -435,7 +486,7 @@ exports.default = Features;
 
 
 Object.defineProperty(exports, "__esModule", {
-		value: true
+	value: true
 });
 
 var _react = __webpack_require__(0);
@@ -465,79 +516,79 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Header = function (_React$Component) {
-		_inherits(Header, _React$Component);
+	_inherits(Header, _React$Component);
 
-		function Header() {
-				var _ref;
+	function Header() {
+		var _ref;
 
-				var _temp, _this, _ret;
+		var _temp, _this, _ret;
 
-				_classCallCheck(this, Header);
+		_classCallCheck(this, Header);
 
-				for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-						args[_key] = arguments[_key];
-				}
-
-				return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.render = function () {
-						var height = _this.props.height;
-
-
-						var clientHeight = document.documentElement.clientHeight;
-						var offset = (0, _loginutil.translate)(0, 100, height / 4, height - 60)(-_this.props.scroll);
-						var pinned = _this.header && _this.header.getBoundingClientRect().top <= clientHeight / 20;
-
-						var headerStyle = {
-								top: pinned ? 'calc(' + -_this.props.top + 'px + 5vh' : offset + 'px',
-								transform: pinned ? 'none' : 'translate(0, -50%)',
-								zIndex: 300
-						};
-
-						var headerSecondStyle = {
-								top: pinned ? '5vh' : -height / 2 + offset + 'px',
-								position: pinned ? 'fixed' : 'relative',
-								transform: pinned ? 'none' : 'translate(0, -50%)'
-						};
-
-						return _react2.default.createElement(
-								_Block2.default,
-								null,
-								_react2.default.createElement(
-										'div',
-										{ className: 'header', style: { zIndex: 20 } },
-										_react2.default.createElement(_HeaderText2.default, { refTo: function refTo(el) {
-														return _this.header = el;
-												}, style: headerStyle }),
-										_react2.default.createElement(
-												'div',
-												{ className: 'header__login', onClick: _this.props.toggleLogin },
-												'LOGIN'
-										)
-								),
-								_react2.default.createElement(
-										'div',
-										{ className: 'header-two' },
-										_react2.default.createElement(_HeaderText2.default, { style: headerSecondStyle }),
-										_react2.default.createElement(
-												'div',
-												{ className: 'header-two__content' },
-												_react2.default.createElement(
-														'span',
-														null,
-														'Simple route management, designed for the whole team.'
-												)
-										)
-								)
-						);
-				}, _temp), _possibleConstructorReturn(_this, _ret);
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
 		}
 
-		return Header;
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.render = function () {
+			var height = _this.props.height;
+
+
+			var clientHeight = document.documentElement.clientHeight;
+			var offset = (0, _loginutil.translate)(0, 100, height / 4, height - 60)(-_this.props.scroll);
+			var pinned = _this.header && _this.header.getBoundingClientRect().top <= clientHeight / 20;
+
+			var headerStyle = {
+				top: pinned ? 'calc(' + -_this.props.top + 'px + 5vh' : offset + 'px',
+				transform: pinned ? 'none' : 'translate(0, -50%)',
+				zIndex: 300
+			};
+
+			var headerSecondStyle = {
+				top: pinned ? '5vh' : -height / 2 + offset + 'px',
+				position: pinned ? 'fixed' : 'relative',
+				transform: pinned ? 'none' : 'translate(0, -50%)'
+			};
+
+			return _react2.default.createElement(
+				_Block2.default,
+				null,
+				_react2.default.createElement(
+					'div',
+					{ className: 'header', style: { zIndex: 20 } },
+					_react2.default.createElement(_HeaderText2.default, { refTo: function refTo(el) {
+							return _this.header = el;
+						}, style: headerStyle }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'header__login', onClick: _this.props.toggleLogin },
+						'LOGIN'
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'header-two' },
+					_react2.default.createElement(_HeaderText2.default, { style: headerSecondStyle }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'header-two__content' },
+						_react2.default.createElement(
+							'span',
+							null,
+							'Simple route management, designed for the whole team.'
+						)
+					)
+				)
+			);
+		}, _temp), _possibleConstructorReturn(_this, _ret);
+	}
+
+	return Header;
 }(_react2.default.Component);
 
 Header.propTypes = {
-		toggleLogin: _propTypes2.default.func,
-		scroll: _propTypes2.default.number.isRequired,
-		height: _propTypes2.default.number
+	toggleLogin: _propTypes2.default.func,
+	scroll: _propTypes2.default.number.isRequired,
+	height: _propTypes2.default.number
 };
 exports.default = Header;
 
@@ -619,7 +670,84 @@ exports.default = Login;
 
 /***/ }),
 
-/***/ 51:
+/***/ 32:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var fetcher = function () {
+	function fetcher() {
+		_classCallCheck(this, fetcher);
+
+		this.prefix = '/api/';
+	}
+
+	_createClass(fetcher, [{
+		key: 'get',
+		value: function get(resource, params) {
+			return fetch(this.prefix + resource + paramToQuery(params)).then(function (res) {
+				return res.json();
+			});
+		}
+	}, {
+		key: 'create',
+		value: function create(resource, data) {
+			return fetch(this.prefix + resource, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: formatBody(data)
+			});
+		}
+	}, {
+		key: 'update',
+		value: function update(resource, data) {
+			return fetch(this.prefix + resource, {
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: formatBody(data)
+			}).then(function (res) {
+				return res.json();
+			});
+		}
+	}]);
+
+	return fetcher;
+}();
+
+exports.default = new fetcher();
+
+
+function paramToQuery(obj) {
+	if (!obj) return '';
+
+	return '?' + Object.keys(obj).map(function (key) {
+		return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]);
+	}).join('&');
+}
+
+function formatBody(obj) {
+	return JSON.stringify(obj);
+}
+
+/***/ }),
+
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -762,4 +890,4 @@ function debounce(func, wait) {
 
 /***/ })
 
-},[51]);
+},[52]);
